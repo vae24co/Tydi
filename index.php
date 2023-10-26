@@ -6,6 +6,8 @@ const PS = '/';
 const DS = DIRECTORY_SEPARATOR;
 const RD = __DIR__ . DS;
 
+define('SYSTEM', 'ONLINE');
+
 // ◇ Core
 $core = RD . 'core.php';
 if (!is_file($core)) {
