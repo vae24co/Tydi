@@ -22,4 +22,5 @@ Tydi™ is both free and open-source, prioritizing the use of standard languages
 ## License
 
 Tydi Framework is open-source software released under the [Apache License Version 2.0](/LICENSE "Apache License Version 2.0").
+
 You can find more details about the Apache License at [https://www.apache.org/licenses/LICENSE-2.0](https://www.apache.org/licenses/LICENSE-2.0 "https://www.apache.org/licenses/LICENSE-2.0").
