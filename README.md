@@ -16,3 +16,8 @@ _**Tydi™ Framework** is an open-source library for building websites, applicat
 Tydi™ is a lightweight PHP framework designed to streamline and organize code, making it easier to maintain. As a versatile web framework, Tydi™ is built for rapid development, enabling you to create powerful applications and APIs efficiently. It caters to modern, responsive websites, database-driven applications, prototypes, and various web services, all while maintaining a minimal footprint and respecting your workflow as a developer.
 
 Tydi™ is both free and open-source, prioritizing the use of standard languages and clean code separation, following a model–view–controller architecture.
+
+## License
+
+Tydi Framework is open-source software released under the [Apache License Version 2.0](/LICENSE "Apache License Version 2.0").
+You can find more details about the Apache License at [https://www.apache.org/licenses/LICENSE-2.0](https://www.apache.org/licenses/LICENSE-2.0 "https://www.apache.org/licenses/LICENSE-2.0").
