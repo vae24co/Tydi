@@ -7,6 +7,8 @@
 [![AO](https://img.shields.io/badge/Twitter-@iamodao-skyblue.svg)](https://www.twitter.com/iamodao)
 [![AO](https://img.shields.io/badge/LinkedIn-Osawere™-blue.svg)](https://www.linkedin.com/in/iamodao/)
 
+## About Tydi™ Framework
+
 _**Tydi™ Framework** is an open-source library for building websites, applications, APIs, and Progressive Web Apps (PWA) using standard web technologies. It was initially conceived and developed by [AO](https://osawere.com/about?ref=tydi.repo "Anthony Osawere")™ and is currently being maintained as part of BRUX™ for [VAE24™ Inc](https://vae24.com "VAE24™ Inc")._
 
 > Tydi: a tiny php framework that lets you tidy - **AO™**
