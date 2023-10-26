@@ -1,2 +1,16 @@
 # Tydi Framework
-Tydi™ Framework is an open-source library for building websites, applications, APIs, and Progressive Web Apps (PWA) using standard web technologies. It was initially conceived and developed by AO™ and is currently being maintained as part of BRUX™ for VAE24™ Inc.
+
+[![License](https://img.shields.io/badge/License-Apache%202.0-red.svg)](/LICENSE)
+[![Version](https://img.shields.io/badge/Version-Evolving-yellow.svg)](/releases/latest)
+[![Generic badge](https://img.shields.io/badge/Wiki-Read-1abc9c.svg)](/wiki)
+[![Author](https://img.shields.io/badge/Author-AO™-green.svg)](https://osawere.com/)
+[![AO](https://img.shields.io/badge/Twitter-@iamodao-skyblue.svg)](https://www.twitter.com/iamodao)
+[![AO](https://img.shields.io/badge/LinkedIn-Osawere™-blue.svg)](https://www.linkedin.com/in/iamodao/)
+
+
+_**Tydi™ Framework** is an open-source library for building websites, applications, APIs, and Progressive Web Apps (PWA) using standard web technologies. It was initially conceived and developed by [AO](https://osawere.com/about?ref=tydi.repo "Anthony Osawere")™ and is currently being maintained as part of BRUX™ for [VAE24™ Inc](https://vae24.com "VAE24™ Inc")._
+
+> Tydi: - a tiny PHP framework that lets you tidy
+
+
+Tydi™ is a lightweight PHP framework designed to assist in organizing and streamlining code, making it easier to maintain and manage.
