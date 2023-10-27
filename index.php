@@ -8,11 +8,11 @@ const MACHINE = 'LOCAL';
 
 
 // ◇ Load Customizr
-$customizr = 'customizr.php';
-if (!is_file($customizr)) {
-	$error = '<strong>' . FRAMEWORK . '™</strong> • Customizr Unavailable! → [<em>' . $customizr . '</em>]';
+$file = 'customizr.php';
+if (!is_file($file)) {
+	$error = '<strong>' . FRAMEWORK . '™</strong> • Customizr Unavailable! → [<em>' . $file . '</em>]';
 	exit($error);
 }
 
-include $customizr;
+include $file;
 ?>
