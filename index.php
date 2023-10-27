@@ -1,16 +1,18 @@
 <?php //*** Index - The entry point » Tydi™ Framework © 2023 ∞ AO™ • @iamodao • www.osawere.com ∞ Apache License ***//
 
-// ◇ Initialization
-const TYDI = 'Tydi';
-const PS = '/';
-const DS = DIRECTORY_SEPARATOR;
-const RD = __DIR__ . DS;
+// ◇ Customization
+const FRAMEWORK = 'Tydi';
+const SYSTEM = 'ONLINE';
+const ENVIRONMENT = 'DEVELOPMENT';
+const MACHINE = 'LOCAL';
 
-define('SYSTEM', 'ONLINE');
 
-// ◇ Core
-$core = RD . 'core.php';
-if (!is_file($core)) {
-	exit('<strong>' . TYDI . '™</strong> • Core Unavailable! → [<em>' . $core . '</em>]');
+// ◇ Load Customizr
+$customizr = 'customizr.php';
+if (!is_file($customizr)) {
+	$error = '<strong>' . FRAMEWORK . '™</strong> • Customizr Unavailable! → [<em>' . $customizr . '</em>]';
+	exit($error);
 }
-require $core;
+
+include $customizr;
+?>
