@@ -1,10 +1,18 @@
 <?php //*** Env - Environment » Tydi™ Framework © 2023 ∞ AO™ • @iamodao • www.osawere.com ∞ Apache License ***//
 class Env {
 
+	// • property
+	protected static $version;
+
+
+
+
+
 	// • ==== call → handler - undefined method » [error]
 	public function __call($method, $argument) {
 		return Tydi::oversightX(__CLASS__, 'method unreachable', $method);
 	}
+
 
 
 
@@ -15,6 +23,27 @@ class Env {
 		return Tydi::oversightX(__CLASS__, 'static: method unreachable', $method);
 	}
 
+
+
+
+
+	// • ==== version → get code version
+	public static function version($version = null) {
+
+		// » set version
+		if (!empty($version)) {
+			self::$version = $version;
+			return true;
+		}
+
+		// » set default version
+		if (empty(self::$version)) {
+			self::$version = 'oreo';
+		}
+
+		// » get version
+		return self::$version;
+	}
 
 
 
