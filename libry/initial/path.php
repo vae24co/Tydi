@@ -12,6 +12,8 @@ $PATH = [
 	'LIBRY' => $LIBRY,
 	'ORIG' => $ORIG,
 
+	'HELPER' => $LIBRY . 'helper' . DS,
+
 	'BACKEND' => [
 		'O' => $BACKEND,
 	],
