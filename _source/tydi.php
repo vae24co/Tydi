@@ -2,53 +2,6 @@
 
 class Tydi {
 
-	// • ==== call → handler - undefined method » [error]
-	public function __call($method, $argument) {
-		$object = self::oClass($method, $argument);
-		if (!$object) {
-			$caller = __CLASS__ . '->' . $method . '()';
-			return self::oversight(__CLASS__ . '™', 'static: method unreachable', $caller);
-		}
-		return $object;
-	}
-
-
-
-
-
-	// • ==== callStatic → handler - undefined static method » [error]
-	public static function __callStatic($method, $argument) {
-		$object = self::oClass($method, $argument);
-		if (!$object) {
-			$caller = __CLASS__ . '::' . $method . '()';
-			return self::oversight(__CLASS__ . '™', 'static: method unreachable', $caller);
-		}
-		return $object;
-	}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 	// • ==== inc → load all files in library »
 	public static function inc(string|array $file, string $path = null, closure|array $action = null) {
 		if (is_string($file)) {
