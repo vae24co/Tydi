@@ -90,7 +90,7 @@ class Tydi {
 		} elseif (strlen($path) > 1) {
 
 			if (StringX::endWithAny($class, ['zr', 'API', 'App', 'Site'])) {
-				$filename = strtolower(Env::getVersion()) . DS . $filename;
+				$filename = strtolower(Env::version()) . DS . $filename;
 			}
 
 			if (substr($path, -(strlen(DS))) === DS) {
@@ -103,7 +103,7 @@ class Tydi {
 			require_once $filepath;
 			return $filepath;
 		} else {
-			$filepath = StringX::swapLast($filepath, strtolower(Env::getVersion()) . DS);
+			$filepath = StringX::swapLast($filepath, strtolower(Env::version()) . DS);
 			if (is_file($filepath)) {
 				require_once $filepath;
 				return $filepath;
