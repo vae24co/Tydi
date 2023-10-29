@@ -21,7 +21,7 @@ if (!defined('SYSTEM') || SYSTEM === 'OFFLINE') {
 }
 
 
-// • Include Tydi
+// • Include Tydi Framework
 $file = RD . 'libry' . DS . 'tydi.php';
 if (!is_file($file)) {
 	$error = '<strong>' . FRAMEWORK . '™</strong> • File Unavailable! → [<em>' . $file . '</em>]';
@@ -31,6 +31,17 @@ include $file;
 
 
 // • Include Initial Files
-$files = ['patwh'];
+$files = ['path', 'string', 'env', 'autoload'];
 $path = RD . 'libry' . DS . 'initial' . DS;
 Tydi::inc($files, $path);
+
+
+
+// • Autoload
+if (function_exists('Autoload')) {
+	spl_autoload_register('Autoload');
+}
+
+
+// • PHP - Minimum Required
+Env::php('8.0');
