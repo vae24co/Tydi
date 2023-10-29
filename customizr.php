@@ -31,7 +31,7 @@ include $file;
 
 
 // • Include Initial Files
-$files = ['path', 'string', 'env', 'autoload'];
+$files = ['path', 'string', 'env', 'session', 'autoload'];
 $path = RD . 'libry' . DS . 'initial' . DS;
 Tydi::inc($files, $path);
 
@@ -45,3 +45,14 @@ if (function_exists('Autoload')) {
 
 // • PHP - Minimum Required
 Env::php('8.0');
+
+
+// • Session
+$Session = new Session;
+$Session->start();
+
+
+// • Error Reporting
+if (Env::isProduction()) {
+	error_reporting(0);
+}
