@@ -3,7 +3,12 @@ class Tydi {
 
 	// • ==== call → handler - undefined method » [error]
 	public function __call($method, $argument) {
-		return self::oversightX(__CLASS__, 'method unreachable', $method);
+		$object = self::oClass($method, $argument);
+		if (!$object) {
+			$caller = __CLASS__ . '->' . $method . '()';
+			return self::oversightX(__CLASS__ . '™', 'method unreachable', $caller);
+		}
+		return $object;
 	}
 
 
@@ -11,10 +16,13 @@ class Tydi {
 
 	// • ==== callStatic → handler - undefined static method » [error]
 	public static function __callStatic($method, $argument) {
-		$caller = __CLASS__ . '::' . $method . '()';
-		return self::oversightX(__CLASS__, 'static: method unreachable', $method);
+		$object = self::oClass($method, $argument);
+		if (!$object) {
+			$caller = __CLASS__ . '::' . $method . '()';
+			return self::oversightX(__CLASS__ . '™', 'static: method unreachable', $caller);
+		}
+		return $object;
 	}
-
 
 
 
@@ -34,7 +42,6 @@ class Tydi {
 		$o .= '</div>';
 		return $o;
 	}
-
 
 
 
@@ -71,7 +78,6 @@ class Tydi {
 
 
 
-
 	// • ==== callerX → report class/function unavailable »
 	public static function callerX($caller, $type, &$file = null) {
 		if ($type === 'CLASS' && !class_exists($caller) || $type === 'FUNCTION' && !function_exists($caller)) {
@@ -79,7 +85,6 @@ class Tydi {
 		}
 		return true;
 	}
-
 
 
 
@@ -127,6 +132,23 @@ class Tydi {
 		}
 	}
 
+
+
+
+	// • ==== oClass → call class automatically » [object | false]
+	private static function oClass($method, $argument) {
+		$class = ucfirst($method);
+		if (!class_exists($class, false)) {
+			echo $file = PATH['LIBRY'] . strtolower($method) . '.php';
+			if (is_file($file)) {
+				require_once $file;
+			}
+		}
+		if (class_exists($class, false)) {
+			return new $class;
+		}
+		return false;
+	}
 
 
 
