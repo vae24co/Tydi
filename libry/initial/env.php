@@ -7,12 +7,10 @@ class Env {
 
 
 
-
 	// • ==== call → handler - undefined method » [error]
 	public function __call($method, $argument) {
 		return Tydi::oversightX(__CLASS__, 'method unreachable', $method);
 	}
-
 
 
 
@@ -22,7 +20,6 @@ class Env {
 		$caller = __CLASS__ . '::' . $method . '()';
 		return Tydi::oversightX(__CLASS__, 'static: method unreachable', $method);
 	}
-
 
 
 
@@ -44,6 +41,7 @@ class Env {
 		// » get version
 		return self::$version;
 	}
+
 
 
 
