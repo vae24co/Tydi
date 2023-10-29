@@ -11,7 +11,6 @@ class StringX {
 
 	// • ==== callStatic → handler - undefined static method » [error]
 	public static function __callStatic($method, $argument) {
-		$caller = __CLASS__ . '::' . $method . '()';
 		return Tydi::oversightX(__CLASS__, 'static: method unreachable', $method);
 	}
 
