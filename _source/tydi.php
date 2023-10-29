@@ -30,20 +30,7 @@ class Tydi {
 
 
 
-	// • ==== oClass → call class automatically » [object | false]
-	public static function oClass($method, $argument) {
-		$class = ucfirst($method);
-		if (!class_exists($class, false)) {
-			$file = PATH['LIBRY'] . strtolower($method) . '.php';
-			if (is_file($file)) {
-				require_once $file;
-			}
-		}
-		if (class_exists($class, false)) {
-			return new $class;
-		}
-		return false;
-	}
+
 
 
 
@@ -109,6 +96,7 @@ class Tydi {
 			$files = array_filter($files, function ($files) use ($exclude) {
 				return !in_array($files, $exclude);
 			});
+
 			if (!empty($files)) {
 				foreach ($files as &$file) {
 					$file = $directory . $file;
