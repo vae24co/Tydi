@@ -84,6 +84,7 @@ class Tydi {
 
 
 
+	// • ==== classX → report class unavailable »
 	public static function classX($filename, $class = null, $path = null) {
 		if (is_null($path)) {
 			$filepath = $filename;
@@ -114,18 +115,15 @@ class Tydi {
 			if (empty($class)) {
 				$class = pathinfo($filepath, PATHINFO_FILENAME);
 			}
-			$e = '<strong>' . FRAMEWORK . '™ • ' . ucfirst($class) . '</strong> | File Unavailable!';
+			$extra = $filepath;
 			if (defined('ENVIRONMENT')) {
 				if (ENVIRONMENT === 'STAGING') {
 					$extra = basename($filename);
-				} elseif (ENVIRONMENT === 'DEVELOPMENT') {
-					$extra = $filepath;
-				}
-				if (ENVIRONMENT !== 'PRODUCTION') {
-					$e .= ' → [<em>' . $extra . '</em>]';
+				} elseif (ENVIRONMENT === 'PRODUCTION') {
+					$extra = strtolower($class);
 				}
 			}
-			exit($e);
+			self::callerX($class, 'CLASS', $extra);
 		}
 	}
 
