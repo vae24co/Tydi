@@ -11,14 +11,26 @@ defined('ENVIRONMENT') || define('ENVIRONMENT', 'DEVELOPMENT'); # [DEVELOPMENT|S
 defined('MACHINE') || define('MACHINE', 'LOCAL'); # [LOCAL|REMOTE]
 
 
-// • Load Initial Files
-$files = ['path'];
-$path = RD . 'libry' . DS . 'initial' . DS;
-foreach ($files as $file) {
-	$file = $path . $file . '.php';
-	if (!is_file($file)) {
-		$error = '<strong>' . FRAMEWORK . '™</strong> • File Unavailable! → [<em>' . $file . '</em>]';
-		exit($error);
-	}
-	include $file;
+// • Clean String
+const CS = ['@<script[^>]*?>.*?</script>@si', '@<[\ /\!]*?[^<>]*?>@si', '@<style[^>]*?>.*?</style>@siU', '@<![\s\S]*?--[ \t\n\r]*>@'];
+
+
+// • If System Offline or Undefined
+if (!defined('SYSTEM') || SYSTEM === 'OFFLINE') {
+	exit('<strong>' . FRAMEWORK . '™</strong> • OFFLINE → [<em>The project is offline!</em>]');
 }
+
+
+// • Include Tydi
+$file = RD . 'libry' . DS . 'tydi.php';
+if (!is_file($file)) {
+	$error = '<strong>' . FRAMEWORK . '™</strong> • File Unavailable! → [<em>' . $file . '</em>]';
+	exit($error);
+}
+include $file;
+
+
+// • Include Initial Files
+$files = ['patwh'];
+$path = RD . 'libry' . DS . 'initial' . DS;
+Tydi::inc($files, $path);
