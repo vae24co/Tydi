@@ -50,6 +50,6 @@ foreach ($namespaces as $namespace) {
 }
 
 
-if (is_file(RD . 'dev.php')) {
-	include RD . 'dev.php';
+if (is_file(RD . 'debug.php')) {
+	include RD . 'debug.php';
 }
