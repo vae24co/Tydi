@@ -61,9 +61,21 @@ class DebugX {
 			}
 			return '<span style="' . self::style('content') . '">' . $value . '</span>';
 		}
+		if (is_null($value)) {
+			return '<span style="' . self::style('content') . '">Null</span>';
+		}
 		if (is_array($value)) {
 			return self::array($value);
 		}
+	}
+
+
+
+
+
+	// • ==== null → ... »
+	protected static function null($var) {
+		return self::value($var);
 	}
 
 
@@ -127,6 +139,10 @@ class DebugX {
 		}
 
 		switch (true) {
+			case is_null($var):
+				$o .= self::null($var);
+				break;
+
 			case is_string($var) || is_integer($var) || is_numeric($var):
 				$o .= self::string($var);
 				break;
@@ -148,6 +164,19 @@ class DebugX {
 		echo $o;
 
 		return;
+	}
+
+
+
+
+
+	// • ==== exit → output and exit »
+	public static function exit($var, string $title = null) {
+		if (empty($title)) {
+			$title = FRAMEWORK;
+		}
+		self::go($var, $title);
+		exit;
 	}
 
 
@@ -178,14 +207,7 @@ class DebugX {
 
 
 
-	// • ==== exit → output and exit »
-	// public static function exit($var, string $title = null) {
-	// 	if (empty($title)) {
-	// 		$title = env('FRAMEWORK');
-	// 	}
-	// 	echo self::dump($var, $title);
-	// 	exit;
-	// }
+
 
 
 
