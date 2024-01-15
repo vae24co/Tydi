@@ -2,6 +2,7 @@
 
 $namespace = [
 	'Tydi\Spry\DebugX' => 'libry/spry/debug.php',
+	'Tydi\Spry\UriX' => 'libry/spry/uri.php',
 ];
 
 return $namespace;
