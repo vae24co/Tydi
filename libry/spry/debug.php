@@ -173,7 +173,7 @@ class DebugX {
 	// • ==== exit → output and exit »
 	public static function exit($var, string $title = null) {
 		if (empty($title)) {
-			$title = FRAMEWORK.'™';
+			$title = FRAMEWORK . '™';
 		}
 		self::go($var, $title);
 		exit;
@@ -183,8 +183,17 @@ class DebugX {
 
 
 
+	// • ==== trace → ... »
+	public static function trace($file, $line) {
+		return ['file' => $file, 'line' => $line];
+	}
+
+
+
+
+
 	// • ==== oversight → ... »
-	public static function oversight($label, $message, $extra = null) {
+	public static function oversight($label, $message, $extra = null, $trace = null) {
 		if (strpos($label, FRAMEWORK) === false) {
 			$label = FRAMEWORK . '™ • ' . $label;
 		}
@@ -202,113 +211,13 @@ class DebugX {
 				}
 			}
 			if (is_string($extra)) {
-				$e .= ' → <em>[' . $extra . ']</em>';
+				$e .= ' → [<em>' . $extra . '</em>]';
 			}
 		}
-
+		if (!empty($trace)) {
+			$e .= ' <br><span style="color: red;">(' . $trace['file'] . ' on line ' . $trace['line'].')</span>';
+		}
 		return self::exit($e);
 	}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-	// • ==== type → output variable type and exit »
-	// public static function type($var){
-	// 	return self::exit(gettype($var));
-	// }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-	// • ==== variable → output variable »
-	// public static function variablex($var, string $title = null) {
-	// 	$o = '<div style="border: 1px solid tan; padding: 5px 10px; margin-bottom:6px;">';
-	// 	if (!is_null($title) && $title !== '') {
-	// 		$o .= '<strong style="margin:0; line-height:1.6; color: brown;">' . $title . ':</strong> ';
-	// 	}
-
-	// 	if (is_string($var)) {
-	// 		$o .= ' <span style="color: purple;">' . $var . '</span>';
-	// 	} else {
-	// 		$o .= ' <div style="color: purple;"><pre><tt>' . var_export($var, true) . '</tt></pre></div>';
-	// 	}
-	// 	$o .= '</div>';
-	// 	return $o;
-	// }
-
-
-
-
-
-	// • ==== oversight → output error »
-	// public static function oversight($label, $message, $extra = null, $exit = true) {
-	// 	if (strpos($label, env('FRAMEWORK')) === false) {
-	// 		$label = env('FRAMEWORK') . '™ • ' . $label;
-	// 	}
-	// 	$e = '<strong>' . ucwords($label) . '</strong> | ' . $message;
-	// 	if (!is_null($extra) && $extra != '') {
-	// 		if (is_array($extra)) {
-	// 			if (count(array_filter(array_keys($extra), 'is_numeric')) === count($extra)) {
-	// 				$extra = implode(' • ', $extra);
-	// 			} else {
-	// 				$append = '';
-	// 				foreach ($extra as $key => $val) {
-	// 					$append .= $key . ': ' . $val . ' • ';
-	// 				}
-	// 				$extra = trim($append, ' • ');
-	// 			}
-	// 		}
-	// 		if (is_string($extra)) {
-	// 			$e .= ' → <em>[' . $extra . ']</em>';
-	// 		}
-	// 	}
-	// 	echo self::dump($e);
-	// 	if ($exit) {
-	// 		exit();
-	// 	}
-	// }
-
 
 } //> end of DebugX
