@@ -8,8 +8,8 @@ class LoaderX {
 
 
 
-	// ◇ ==== register →
-	public static function register() {
+	// ◇ ==== init →
+	public static function init() {
 		spl_autoload_register([self::class, 'load']);
 	}
 
@@ -42,8 +42,8 @@ class LoaderX {
 
 
 
-	// ◇ ==== init →
-	public static function init(array $map) {
+	// ◇ ==== map →
+	public static function map(array $map) {
 		self::$map = array_merge(self::$map, $map);
 	}
 
