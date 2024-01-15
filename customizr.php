@@ -48,3 +48,8 @@ foreach ($namespaces as $namespace) {
 		LoaderX::map($map);
 	}
 }
+
+
+if (is_file(RD . 'dev.php')) {
+	include RD . 'dev.php';
+}
