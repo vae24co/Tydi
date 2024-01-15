@@ -1,5 +1,7 @@
 <?php //*** ServerX » Tydi™ Framework © 2024 ∞ AO™ • @iamodao • www.osawere.com ∞ Apache License ***//
 
+namespace Tydi\Spry;
+
 class ServerX {
 
 	// • ==== referrer → ... »
