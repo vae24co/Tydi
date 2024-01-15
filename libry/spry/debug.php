@@ -108,7 +108,7 @@ class DebugX {
 		$o = '<em style="' . self::style('label') . '">is_object</em>';
 		$o .= '<div style="' . self::style('partition') . '">';
 		foreach ($var as $key => $value) {
-			$o .= '<div><strong style="' . self::style('key') . '">' . $key . ' -> </strong>' . self::value($value) . '</div>';
+			$o .= '<div><strong style="' . self::style('key') . '">' . $key . ' → </strong>' . self::value($value) . '</div>';
 		}
 		$o .= '</div>';
 		return $o;
