@@ -1,0 +1,168 @@
+# //*** htaccess » Tydi™ ~ AO™ • @iamodao • www.osawere.com ~ © 2023 • Apache License ***//
+ServerSignature Off
+DefaultLanguage en-US
+AddType application/x-httpd-php .php .inc .phtml .html
+DirectoryIndex index.php index.html index.phtml
+Options All -Indexes
+FileETag None
+<IfModule mod_expires.c>
+	ExpiresActive On
+	ExpiresByType text/html "access plus 1 seconds"
+	ExpiresByType text/css "access plus 1 week"
+	ExpiresByType image/gif "access plus 1 month"
+	ExpiresByType image/png "access plus 1 month"
+	ExpiresByType image/jpg "access plus 1 month"
+	ExpiresByType image/jpeg "access plus 1 month"
+	ExpiresByType application/javascript "access plus 1 week"
+	ExpiresByType application/x-javascript "access plus 1 week"
+	ExpiresByType text/javascript "access plus 1 week"
+	ExpiresByType application/pdf "access plus 1 month"
+	ExpiresByType application/x-shockwave-flash "access plus 1 month"
+</IfModule>
+<IfModule mod_deflate.c>
+	SetOutputFilter DEFLATE
+	DeflateCompressionLevel 6
+	DeflateMemLevel 9
+	DeflateWindowSize 15
+	DeflateBufferSize 8192
+	DeflateFilterNote ratio
+</IfModule>
+Header always set X-XSS-Protection "1; mode=block"
+Header always set X-Content-Type-Options "nosniff"
+Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
+Header always set X-Frame-Options "SAMEORIGIN"
+
+#Rewrites
+RewriteEngine On
+RewriteBase /
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-f
+
+#HTTP Error
+ErrorDocument 400 /index.php?ehttp=400&ospring=site&oplatform=site
+ErrorDocument 403 /index.php?ehttp=403&ospring=site&oplatform=site
+ErrorDocument 404 /index.php?ehttp=404&ospring=site&oplatform=site
+ErrorDocument 500 /index.php?ehttp=500&ospring=site&oplatform=site
+
+#Forbidden
+RedirectMatch 403 ^/(ario|cloud|orign|libry|tydi)/$
+
+#Redirect
+RewriteRule ^redirect\/(.+)$ /index.php?redirect=$1 [NC,QSA,END]
+
+#Rewrite on TYDI
+RewriteRule ^clear.css$ /libry/vendor/tydi/asset/clear.css [NC,QSA,END]
+RewriteRule ^tydi.css$ /libry/vendor/tydi/asset/tydi.css [NC,QSA,END]
+RewriteRule ^tydi.js$ /libry/vendor/tydi/asset/tydi.js [NC,QSA,END]
+RewriteRule ^jquery.js$ /libry/vendor/tydi/asset/jquery.js [NC,QSA,END]
+
+
+#Rewrite LESL
+# RewriteRule ^lesl\/favicon\.ico$ /orig/lesl/ario/media/favicon/favicon.ico [NC,QSA,END]
+# RewriteRule ^lesl/font\/(.+)$ /orig/lesl/ario/font/$1 [NC,QSA,END]
+# RewriteRule ^lesl/animate\/(.+)$ /orig/lesl/ario/media/animate/$1 [NC,QSA,END]
+# RewriteRule ^lesl/icon\/(.+)$ /orig/lesl/ario/media/icon/$1 [NC,QSA,END]
+# RewriteRule ^lesl/image\/(.+)$ /orig/lesl/ario/media/image/$1 [NC,QSA,END]
+# RewriteRule ^lesl/photo\/(.+)$ /orig/lesl/ario/media/photo/$1 [NC,QSA,END]
+# RewriteRule ^lesl.css$ /libry/lesl/ario/css/lesl.css [NC,QSA,END]
+# RewriteRule ^lesl.js$ /libry/lesl/ario/js/lesl.js [NC,QSA,END]
+
+
+#Rewrite PATH to ARIO
+RewriteRule ^jore\/(.+)$ /orig/jore/ario/$1 [NC,QSA,END]
+RewriteRule ^lesl\/(.+)$ /orig/lesl/ario/$1 [NC,QSA,END]
+
+
+#Rewrite FAVICON
+RewriteCond %{HTTP_HOST} ^((?!api|app|www|ario).+)\.(.+)\.(ng|com.ng|net|org|com|co.uk|co|one)$
+RewriteRule ^favicon\.ico$ /orig/%1/ario/media/photo/favicon/favicon.ico [NC,QSA,END]
+RewriteCond %{HTTP_HOST} ^(app|www|ario)\.(.+)\.(ng|com.ng|net|org|com|co.uk|co|one)$
+RewriteRule ^favicon\.ico$ /orig/zero/ario/media/photo/favicon/favicon.ico [NC,QSA,END]
+RewriteCond %{HTTP_HOST} ^([^.]+)\.(ng|com.ng|net|org|com|co.uk|co|one)$
+RewriteRule ^favicon\.ico$ /orig/zero/ario/media/photo/favicon/favicon.ico [NC,QSA,END]
+
+#Rewrite ARIO
+RewriteCond %{HTTP_HOST} ^((?!api|app|www|ario).+)\.(.+)\.(ng|com.ng|net|org|com|co.uk|co|one)$
+RewriteRule ^ario\/(.+)$ /orig/%1/ario/$1 [NC,QSA,END]
+RewriteCond %{HTTP_HOST} ^(app|www|ario)\.(.+)\.(ng|com.ng|net|org|com|co.uk|co|one)$
+RewriteRule ^ario\/(.+)$ /orig/zero/ario/$1 [NC,QSA,END]
+RewriteCond %{HTTP_HOST} ^([^.]+)\.(ng|com.ng|net|org|com|co.uk|co|one)$
+RewriteRule ^ario\/(.+)$ /orig/zero/ario/$1 [NC,QSA,END]
+
+#Rewrite CSS
+RewriteCond %{HTTP_HOST} ^((?!api|app|www|ario).+)\.(.+)\.(ng|com.ng|net|org|com|co.uk|co|one)$
+RewriteRule ^css\/(.+)$ /orig/%1/ario/css/$1 [NC,QSA,END]
+RewriteCond %{HTTP_HOST} ^(app|www|ario)\.(.+)\.(ng|com.ng|net|org|com|co.uk|co|one)$
+RewriteRule ^css\/(.+)$ /orig/zero/ario/css/$1 [NC,QSA,END]
+RewriteCond %{HTTP_HOST} ^([^.]+)\.(ng|com.ng|net|org|com|co.uk|co|one)$
+RewriteRule ^css\/(.+)$ /orig/zero/ario/css/$1 [NC,QSA,END]
+
+#Rewrite FONT
+RewriteCond %{HTTP_HOST} ^((?!api|app|www|ario).+)\.(.+)\.(ng|com.ng|net|org|com|co.uk|co|one)$
+RewriteRule ^font\/(.+)$ /orig/%1/ario/font/$1 [NC,QSA,END]
+RewriteCond %{HTTP_HOST} ^(app|www|ario)\.(.+)\.(ng|com.ng|net|org|com|co.uk|co|one)$
+RewriteRule ^font\/(.+)$ /orig/zero/ario/font/$1 [NC,QSA,END]
+RewriteCond %{HTTP_HOST} ^([^.]+)\.(ng|com.ng|net|org|com|co.uk|co|one)$
+RewriteRule ^font\/(.+)$ /orig/zero/ario/font/$1 [NC,QSA,END]
+
+#Rewrite JS
+RewriteCond %{HTTP_HOST} ^((?!api|app|www|ario).+)\.(.+)\.(ng|com.ng|net|org|com|co.uk|co|one)$
+RewriteRule ^js\/(.+)$ /orig/%1/ario/js/$1 [NC,QSA,END]
+RewriteCond %{HTTP_HOST} ^(app|www|ario)\.(.+)\.(ng|com.ng|net|org|com|co.uk|co|one)$
+RewriteRule ^js\/(.+)$ /orig/zero/ario/js/$1 [NC,QSA,END]
+RewriteCond %{HTTP_HOST} ^([^.]+)\.(ng|com.ng|net|org|com|co.uk|co|one)$
+RewriteRule ^js\/(.+)$ /orig/zero/ario/js/$1 [NC,QSA,END]
+
+#Rewrite AUDIO
+RewriteCond %{HTTP_HOST} ^((?!api|app|www|ario).+)\.(.+)\.(ng|com.ng|net|org|com|co.uk|co|one)$
+RewriteRule ^audio\/(.+)$ /orig/%1/ario/media/audio/$1 [NC,QSA,END]
+RewriteCond %{HTTP_HOST} ^(app|www|ario)\.(.+)\.(ng|com.ng|net|org|com|co.uk|co|one)$
+RewriteRule ^audio\/(.+)$ /orig/zero/ario/media/audio/$1 [NC,QSA,END]
+RewriteCond %{HTTP_HOST} ^([^.]+)\.(ng|com.ng|net|org|com|co.uk|co|one)$
+RewriteRule ^audio\/(.+)$ /orig/zero/ario/media/audio/$1 [NC,QSA,END]
+
+#Rewrite IMAGE
+RewriteCond %{HTTP_HOST} ^((?!api|app|www|ario).+)\.(.+)\.(ng|com.ng|net|org|com|co.uk|co|one)$
+RewriteRule ^image\/(.+)$ /orig/%1/ario/media/photo/$1 [NC,QSA,END]
+RewriteCond %{HTTP_HOST} ^(app|www|ario)\.(.+)\.(ng|com.ng|net|org|com|co.uk|co|one)$
+RewriteRule ^image\/(.+)$ /orig/zero/ario/media/photo/$1 [NC,QSA,END]
+RewriteCond %{HTTP_HOST} ^([^.]+)\.(ng|com.ng|net|org|com|co.uk|co|one)$
+RewriteRule ^image\/(.+)$ /orig/zero/ario/media/photo/$1 [NC,QSA,END]
+
+#Rewrite VIDEO
+RewriteCond %{HTTP_HOST} ^((?!api|app|www|ario).+)\.(.+)\.(ng|com.ng|net|org|com|co.uk|co|one)$
+RewriteRule ^video\/(.+)$ /orig/%1/ario/media/video/$1 [NC,QSA,END]
+RewriteCond %{HTTP_HOST} ^(app|www|ario)\.(.+)\.(ng|com.ng|net|org|com|co.uk|co|one)$
+RewriteRule ^video\/(.+)$ /orig/zero/ario/media/video/$1 [NC,QSA,END]
+RewriteCond %{HTTP_HOST} ^([^.]+)\.(ng|com.ng|net|org|com|co.uk|co|one)$
+RewriteRule ^video\/(.+)$ /orig/zero/ario/media/video/$1 [NC,QSA,END]
+
+#Rewrite CLOUD
+RewriteCond %{HTTP_HOST} ^((?!api|app|www|ario).+)\.(.+)\.(ng|com.ng|net|org|com|co.uk|co|one)$
+RewriteRule ^cloud\/(.+)$ /orig/%1/cloud/$1 [NC,QSA,END]
+RewriteCond %{HTTP_HOST} ^(app|www|ario)\.(.+)\.(ng|com.ng|net|org|com|co.uk|co|one)$
+RewriteRule ^cloud\/(.+)$ /orig/zero/cloud/$1 [NC,QSA,END]
+RewriteCond %{HTTP_HOST} ^([^.]+)\.(ng|com.ng|net|org|com|co.uk|co|one)$
+RewriteRule ^cloud\/(.+)$ /orig/zero/cloud/$1 [NC,QSA,END]
+
+#Rewrite LINK
+RewriteCond %{HTTP_HOST} ^((?!api|app|www|ario).+)\.(.+)\.(ng|com.ng|net|org|com|co.uk|co|one)$
+RewriteRule ^((?!(.+)\.(php|html|js|css|ico|png|jpg|svg|eot|woff|woff2|ttf|pdf|txt|md))(?!(api|app|ario|tydi|~play)\/).*)$ /index.php?ospring=%1&ohost=%2&otld=%3&oplatform=site&olink=$1 [NC,QSA,END]
+RewriteCond %{HTTP_HOST} ^(api)\.(.+)\.(ng|com.ng|net|org|com|co.uk|co|one)$
+RewriteRule ^((?!(.+)\.(php|html|js|css|ico|png|jpg|svg|eot|woff|woff2|ttf|pdf|txt|md))(?!(api|app|ario|tydi|~play)\/).*)$ /index.php?ospring=zero&ohost=%2&otld=%3&oplatform=api&olink=$1 [NC,QSA,END]
+RewriteCond %{HTTP_HOST} ^(app)\.(.+)\.(ng|com.ng|net|org|com|co.uk|co|one)$
+RewriteRule ^((?!(.+)\.(php|html|js|css|ico|png|jpg|svg|eot|woff|woff2|ttf|pdf|txt|md))(?!(api|app|ario|tydi|~play)\/).*)$ /index.php?ospring=zero&ohost=%2&otld=%3&oplatform=app&olink=$1 [NC,QSA,END]
+RewriteCond %{HTTP_HOST} ^(www)\.(.+)\.(ng|com.ng|net|org|com|co.uk|co|one)$
+RewriteRule ^((?!(.+)\.(php|html|js|css|ico|png|jpg|svg|eot|woff|woff2|ttf|pdf|txt|md))(?!(api|app|ario|tydi|~play)\/).*)$ /index.php?ospring=zero&ohost=%2&otld=%3&oplatform=site&olink=$1 [NC,QSA,END]
+RewriteCond %{HTTP_HOST} ^([^.]+)\.(ng|com.ng|net|org|com|co.uk|co|one)$
+RewriteRule ^((?!(.+)\.(php|html|js|css|ico|png|jpg|svg|eot|woff|woff2|ttf|pdf|txt|md))(?!(api|app|ario|tydi|~play)\/).*)$ /index.php?ospring=zero&ohost=%1&otld=%2&oplatform=site&olink=$1 [NC,QSA,END]
+
+RewriteCond %{HTTP_HOST} ^((?!ario).+)\.(.+)\.(ng|com.ng|net|org|com|co.uk|co|one)$
+RewriteRule ^api\/((?!(.+)\.(php|html|js|css|ico|png|jpg|svg|eot|woff|woff2|ttf|pdf|txt|md)).*)$ /index.php?ospring=%1&ohost=%2&otld=%3&oplatform=api&olink=$1 [NC,QSA,END]
+RewriteCond %{HTTP_HOST} ^((?!ario).+)\.(.+)\.(ng|com.ng|net|org|com|co.uk|co|one)$
+RewriteRule ^app\/((?!(.+)\.(php|html|js|css|ico|png|jpg|svg|eot|woff|woff2|ttf|pdf|txt|md)).*)$ /index.php?ospring=%1&ohost=%2&otld=%3&oplatform=app&olink=$1 [NC,QSA,END]
+
+RewriteCond %{HTTP_HOST} ^([^.]+)\.(ng|com.ng|net|org|com|co.uk|co|one)$
+RewriteRule ^api\/((?!(.+)\.(php|html|js|css|ico|png|jpg|svg|eot|woff|woff2|ttf|pdf|txt|md)).*)$ /index.php?ospring=zero&ohost=%1&otld=%2&oplatform=api&olink=$1 [NC,QSA,END]
+RewriteCond %{HTTP_HOST} ^([^.]+)\.(ng|com.ng|net|org|com|co.uk|co|one)$
+RewriteRule ^app\/((?!(.+)\.(php|html|js|css|ico|png|jpg|svg|eot|woff|woff2|ttf|pdf|txt|md)).*)$ /index.php?ospring=zero&ohost=%1&otld=%2&oplatform=app&olink=$1 [NC,QSA,END]
