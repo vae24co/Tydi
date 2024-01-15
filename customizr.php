@@ -50,6 +50,7 @@ foreach ($namespaces as $namespace) {
 }
 
 
+// • Load Debugger File
 if (is_file(RD . 'debug.php')) {
 	include RD . 'debug.php';
 }
