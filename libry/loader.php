@@ -23,7 +23,8 @@ class LoaderX {
 		$path = self::file($name);
 		if ($path !== null) {
 			if (!is_file($path)) {
-				return DebugX::oversight($name, 'Could not load', $path);
+				$trace = DebugX::trace(__FILE__, __LINE__);
+				return DebugX::oversight($name, 'File Unavailable!', $path, $trace);
 			}
 			require $path;
 		}
