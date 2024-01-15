@@ -1,16 +1,15 @@
 <?php //*** LoaderX » Tydi™ Framework © 2024 ∞ AO™ • @iamodao • www.osawere.com ∞ Apache License ***//
 
-use Tydi\Spry\DebugX as DebugX;
-
 class LoaderX {
 
-	// ◇ ==== properties
+	// • ==== property
 	protected static $map = [];
 
 
 
 
-	// ◇ ==== init →
+
+	// • ==== init →
 	public static function init() {
 		spl_autoload_register([self::class, 'load']);
 	}
@@ -18,7 +17,8 @@ class LoaderX {
 
 
 
-	// ◇ ==== load →
+
+	// • ==== load →
 	public static function load($name) {
 		$path = self::file($name);
 		if ($path !== null) {
@@ -33,7 +33,8 @@ class LoaderX {
 
 
 
-	// ◇ ==== file →
+
+	// • ==== file →
 	protected static function file($name, $path = __DIR__) {
 		$name = ltrim($name, '\\');
 		if (isset(self::$map[$name])) {
@@ -48,7 +49,8 @@ class LoaderX {
 
 
 
-	// ◇ ==== map →
+
+	// • ==== map →
 	public static function map(array $map) {
 		self::$map = array_merge(self::$map, $map);
 	}
@@ -56,8 +58,9 @@ class LoaderX {
 
 
 
-	// ◇ ==== namespace →
-	public static function namespace() {
+
+	// • ==== namespace →
+	public static function namespace () {
 		return self::$map;
 	}
 
