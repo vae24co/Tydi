@@ -4,8 +4,7 @@ $namespace = [
 	// 'Zero\Zero' => 'libry/zero.php',
 
 
-	// 'Zero\Spry\oDebugX' => 'libry/spry/debug.php',
-	'Tydi\Spry\oEnvX' => 'libry/spry/env.php',
+	// 'Tydi\Spry\oEnvX' => 'libry/spry/env.php',
 	// 'Zero\Spry\oVariableX' => 'libry/spry/variable.php',
 	// 'Zero\Spry\oValidateX' => 'libry/spry/validate.php',
 	// 'Zero\Spry\oClientX' => 'libry/spry/client.php',
