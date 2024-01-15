@@ -53,6 +53,14 @@ class DebugX {
 		if (is_string($value) || is_numeric($value)) {
 			return '<span style="' . self::style('content') . '">' . $value . '</span>';
 		}
+		if (is_bool($value)) {
+			if ($value === true) {
+				$value = 'True';
+			} else {
+				$value = 'False';
+			}
+			return '<span style="' . self::style('content') . '">' . $value . '</span>';
+		}
 		if (is_array($value)) {
 			return self::array($value);
 		}
@@ -64,16 +72,16 @@ class DebugX {
 
 	// • ==== string → ... »
 	protected static function string(string $var) {
-		// $res = '<em style="' . self::style('label') . '">is_array</em>';
-		// $res .= '<div style="' . self::style('partition') . '">';
-		// foreach ($var as $key => $value) {
-		// 	$res .='<div>';
-		// $res .= '<strong style="' . self::style('key') . '">' . $key . ': </strong>';
-		$res = self::value($var);
-		// $res .='</div>';
-		// }
-		// $res .= '</div>';
-		return $res;
+		return self::value($var);
+	}
+
+
+
+
+
+	// • ==== boolean → ... »
+	protected static function boolean(bool $var) {
+		return '<strong style="' . self::style('key') . '">Boolean: </strong>' . self::value($var);
 	}
 
 
@@ -82,16 +90,13 @@ class DebugX {
 
 	// • ==== array → ... »
 	protected static function array(array $var) {
-		$res = '<em style="' . self::style('label') . '">is_array</em>';
-		$res .= '<div style="' . self::style('partition') . '">';
+		$o = '<em style="' . self::style('label') . '">is_array</em>';
+		$o .= '<div style="' . self::style('partition') . '">';
 		foreach ($var as $key => $value) {
-			$res .= '<div>';
-			$res .= '<strong style="' . self::style('key') . '">' . $key . ': </strong>';
-			$res .= self::value($value);
-			$res .= '</div>';
+			$o .= '<div><strong style="' . self::style('key') . '">' . $key . ': </strong>' . self::value($value) . '</div>';
 		}
-		$res .= '</div>';
-		return $res;
+		$o .= '</div>';
+		return $o;
 	}
 
 
@@ -100,65 +105,96 @@ class DebugX {
 
 	// • ==== object → ... »
 	protected static function object(object $var) {
-		$res = '<em style="' . self::style('label') . '">is_object</em>';
-		$res .= '<div style="' . self::style('partition') . '">';
+		$o = '<em style="' . self::style('label') . '">is_object</em>';
+		$o .= '<div style="' . self::style('partition') . '">';
 		foreach ($var as $key => $value) {
-			$res .= '<div>';
-			$res .= '<strong style="' . self::style('key') . '">' . $key . ' -> </strong>';
-			$res .= self::value($value);
-			$res .= '</div>';
+			$o .= '<div><strong style="' . self::style('key') . '">' . $key . ' -> </strong>' . self::value($value) . '</div>';
 		}
-		$res .= '</div>';
-		return $res;
+		$o .= '</div>';
+		return $o;
 	}
 
 
 
 
 
-	// • ==== variable → ... »
-	public static function variable($var, string $title = null) {
-		$res = '<div style="' . self::style('container') . '">';
+	// • ==== go → ... »
+	public static function go($var, string $title = null) {
+		$o = '<div style="' . self::style('container') . '">';
+
 		if (!empty($title)) {
-			$res .= '<strong style="' . self::style('title') . '">' . $title . '</strong> ';
+			$o .= '<strong style="' . self::style('title') . '">' . $title . '</strong> ';
 		}
-		if (is_string($var)) {
-			$res .= self::string($var);
+
+		switch (true) {
+			case is_string($var) || is_integer($var) || is_numeric($var):
+				$o .= self::string($var);
+				break;
+
+			case is_bool($var):
+				$o .= self::boolean($var);
+				break;
+
+			case is_array($var):
+				$o .= self::array($var);
+				break;
+
+			case is_object($var):
+				$o .= self::object($var);
+				break;
 		}
-		if (is_array($var)) {
-			$res .= self::array($var);
-		}
-		if (is_object($var)) {
-			$res .= self::object($var);
-		}
-		if (is_integer($var) || is_numeric($var)) {
-			$res .= self::string($var);
-		}
-		$res .= '</div>';
-		return $res;
+
+		$o .= '</div>';
+		echo $o;
+
+		return;
 	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
 
 
 	// • ==== exit → output and exit »
-	public static function exit($var, string $title = null) {
-		if (empty($title)) {
-			$title = env('FRAMEWORK');
-		}
-		echo self::variable($var, $title);
-		exit;
-	}
+	// public static function exit($var, string $title = null) {
+	// 	if (empty($title)) {
+	// 		$title = env('FRAMEWORK');
+	// 	}
+	// 	echo self::dump($var, $title);
+	// 	exit;
+	// }
 
 
 
 
 
 	// • ==== type → output variable type and exit »
-	public static function type($var){
-		return self::exit(gettype($var));
-	}
+	// public static function type($var){
+	// 	return self::exit(gettype($var));
+	// }
 
 
 
@@ -175,52 +211,52 @@ class DebugX {
 
 
 	// • ==== variable → output variable »
-	public static function variablex($var, string $title = null) {
-		$o = '<div style="border: 1px solid tan; padding: 5px 10px; margin-bottom:6px;">';
-		if (!is_null($title) && $title !== '') {
-			$o .= '<strong style="margin:0; line-height:1.6; color: brown;">' . $title . ':</strong> ';
-		}
+	// public static function variablex($var, string $title = null) {
+	// 	$o = '<div style="border: 1px solid tan; padding: 5px 10px; margin-bottom:6px;">';
+	// 	if (!is_null($title) && $title !== '') {
+	// 		$o .= '<strong style="margin:0; line-height:1.6; color: brown;">' . $title . ':</strong> ';
+	// 	}
 
-		if (is_string($var)) {
-			$o .= ' <span style="color: purple;">' . $var . '</span>';
-		} else {
-			$o .= ' <div style="color: purple;"><pre><tt>' . var_export($var, true) . '</tt></pre></div>';
-		}
-		$o .= '</div>';
-		return $o;
-	}
+	// 	if (is_string($var)) {
+	// 		$o .= ' <span style="color: purple;">' . $var . '</span>';
+	// 	} else {
+	// 		$o .= ' <div style="color: purple;"><pre><tt>' . var_export($var, true) . '</tt></pre></div>';
+	// 	}
+	// 	$o .= '</div>';
+	// 	return $o;
+	// }
 
 
 
 
 
 	// • ==== oversight → output error »
-	public static function oversight($label, $message, $extra = null, $exit = true) {
-		if (strpos($label, env('FRAMEWORK')) === false) {
-			$label = env('FRAMEWORK') . '™ • ' . $label;
-		}
-		$e = '<strong>' . ucwords($label) . '</strong> | ' . $message;
-		if (!is_null($extra) && $extra != '') {
-			if (is_array($extra)) {
-				if (count(array_filter(array_keys($extra), 'is_numeric')) === count($extra)) {
-					$extra = implode(' • ', $extra);
-				} else {
-					$append = '';
-					foreach ($extra as $key => $val) {
-						$append .= $key . ': ' . $val . ' • ';
-					}
-					$extra = trim($append, ' • ');
-				}
-			}
-			if (is_string($extra)) {
-				$e .= ' → <em>[' . $extra . ']</em>';
-			}
-		}
-		echo self::variable($e);
-		if ($exit) {
-			exit();
-		}
-	}
+	// public static function oversight($label, $message, $extra = null, $exit = true) {
+	// 	if (strpos($label, env('FRAMEWORK')) === false) {
+	// 		$label = env('FRAMEWORK') . '™ • ' . $label;
+	// 	}
+	// 	$e = '<strong>' . ucwords($label) . '</strong> | ' . $message;
+	// 	if (!is_null($extra) && $extra != '') {
+	// 		if (is_array($extra)) {
+	// 			if (count(array_filter(array_keys($extra), 'is_numeric')) === count($extra)) {
+	// 				$extra = implode(' • ', $extra);
+	// 			} else {
+	// 				$append = '';
+	// 				foreach ($extra as $key => $val) {
+	// 					$append .= $key . ': ' . $val . ' • ';
+	// 				}
+	// 				$extra = trim($append, ' • ');
+	// 			}
+	// 		}
+	// 		if (is_string($extra)) {
+	// 			$e .= ' → <em>[' . $extra . ']</em>';
+	// 		}
+	// 	}
+	// 	echo self::dump($e);
+	// 	if ($exit) {
+	// 		exit();
+	// 	}
+	// }
 
 
 } //> end of DebugX
