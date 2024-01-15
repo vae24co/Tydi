@@ -1,5 +1,7 @@
 <?php //*** LoaderX » Tydi™ Framework © 2024 ∞ AO™ • @iamodao • www.osawere.com ∞ Apache License ***//
 
+use Tydi\Spry\DebugX as DebugX;
+
 class LoaderX {
 
 	// ◇ ==== properties
@@ -20,6 +22,9 @@ class LoaderX {
 	public static function load($name) {
 		$path = self::file($name);
 		if ($path !== null) {
+			if (!is_file($path)) {
+				return DebugX::oversight($name, 'Could not load', $path);
+			}
 			require $path;
 		}
 	}
