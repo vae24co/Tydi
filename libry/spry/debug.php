@@ -215,7 +215,8 @@ class DebugX {
 			}
 		}
 		if (!empty($trace)) {
-			$e .= ' <br><span style="color: red;">(' . $trace['file'] . ' on line ' . $trace['line'].')</span>';
+			// $e .= ' <br><span style="color: red;">(' . $trace['file'] . ' on line ' . $trace['line'].')</span>';
+			$e .= ' <br><span style="color: red;"> {' . $trace['file'] . ':' . $trace['line'].'}</span>';
 		}
 		return self::exit($e);
 	}
