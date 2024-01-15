@@ -47,4 +47,12 @@ class LoaderX {
 		self::$map = array_merge(self::$map, $map);
 	}
 
+
+
+
+	// ◇ ==== namespace →
+	public static function namespace() {
+		return self::$map;
+	}
+
 } //> end of LoaderX
