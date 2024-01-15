@@ -173,10 +173,40 @@ class DebugX {
 	// • ==== exit → output and exit »
 	public static function exit($var, string $title = null) {
 		if (empty($title)) {
-			$title = FRAMEWORK;
+			$title = FRAMEWORK.'™';
 		}
 		self::go($var, $title);
 		exit;
+	}
+
+
+
+
+
+	// • ==== oversight → ... »
+	public static function oversight($label, $message, $extra = null) {
+		if (strpos($label, FRAMEWORK) === false) {
+			$label = FRAMEWORK . '™ • ' . $label;
+		}
+		$e = '<strong>' . ucwords($label) . '</strong> | ' . $message;
+		if (!is_null($extra) && $extra != '') {
+			if (is_array($extra)) {
+				if (count(array_filter(array_keys($extra), 'is_numeric')) === count($extra)) {
+					$extra = implode(' • ', $extra);
+				} else {
+					$append = '';
+					foreach ($extra as $key => $val) {
+						$append .= $key . ': ' . $val . ' • ';
+					}
+					$extra = trim($append, ' • ');
+				}
+			}
+			if (is_string($extra)) {
+				$e .= ' → <em>[' . $extra . ']</em>';
+			}
+		}
+
+		return self::exit($e);
 	}
 
 
