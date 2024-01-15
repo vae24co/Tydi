@@ -35,10 +35,12 @@ include $file;
 
 // • Autoloader (Initialize & Load files for Libry & Orig)
 LoaderX::init();
+
 $namespaces = [
 	'libry' => LIBRY,
 	'orig' => ORIG,
 ];
+
 foreach ($namespaces as $namespace) {
 	$namespace .= 'namespace.php';
 	if (is_file($namespace)) {
