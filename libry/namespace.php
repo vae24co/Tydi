@@ -8,7 +8,7 @@ $namespace = [
 	'ServerX' => SPRY . 'server.php',
 	'UriX' => SPRY . 'uri.php',
 	'HttpX' => SPRY . 'http.php',
-	'UrlX' => SPRY . 'url.php',
+	'RouterX' => SPRY . 'router.php',
 ];
 
 return $namespace;
