@@ -8,6 +8,7 @@ class HttpX {
 	protected static $scheme;
 	protected static $domain;
 	protected static $uri;
+	protected static $request;
 
 
 
@@ -40,6 +41,7 @@ class HttpX {
 			self::$scheme = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? 'https://' : 'http://';
 			self::$domain = ServerX::name();
 			self::$uri = UriX::is();
+			self::$request = strtoupper($_SERVER['REQUEST_METHOD']);
 			self::$init = true;
 		}
 		return;
@@ -95,6 +97,15 @@ class HttpX {
 
 
 
+	// • ==== uriWithoutParam → ... »
+	public static function uriWithoutParam() {
+		return self::uri(false);
+	}
+
+
+
+
+
 	// • ==== url → ... »
 	public static function url($withParam = false) {
 		self::init();
@@ -119,6 +130,99 @@ class HttpX {
 	public static function urlWithPort($withParam = false) {
 		self::init();
 		return self::scheme() . self::domain() . ':' . self::port() . self::uri($withParam);
+	}
+
+
+
+
+
+	// • ==== request →
+	public static function request() {
+		self::init();
+		return self::$request;
+	}
+
+
+
+
+
+	// • ==== isGet →
+	public static function isGet() {
+		self::init();
+		return (self::$request === 'GET') ? true : false;
+	}
+
+
+
+
+
+	// • ==== isPost →
+	public static function isPost() {
+		self::init();
+		return (self::$request === 'POST') ? true : false;
+	}
+
+
+
+
+
+	// • ==== isXHR →
+	public static function isXHR() {
+		if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && $_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest') {
+			return true;
+		}
+		return false;
+	}
+
+
+
+
+
+	// • ==== isGetXHR →
+	public static function isGetXHR() {
+		if (self::isGet() && self::isXHR()) {
+			return true;
+		}
+		return false;
+	}
+
+
+
+
+
+	// • ==== isPostXHR →
+	public static function isPostXHR() {
+		if (self::isPost() && self::isXHR()) {
+			return true;
+		}
+		return false;
+	}
+
+
+
+
+
+	// • ==== hasRequest →
+	public static function hasRequest() {
+		return !empty($_REQUEST);
+	}
+
+
+
+
+
+	// • ==== hasGet →
+	public static function hasGet() {
+		return !empty($_GET);
+	}
+
+
+
+
+
+	// • ==== hasPost →
+	public static function hasPost() {
+		return !empty($_POST);
 	}
 
 } //> end of HttpX
