@@ -14,7 +14,7 @@ function Autoload($class) {
 
 
 	// • Instance :: Class name for Object
-	elseif (substr($class, 0, 1) === 'o' || substr($class, -1) === 'O') {
+	if (substr($class, 0, 1) === 'o' || substr($class, -1) === 'O') {
 		if (substr($class, 0, 1) === 'o') {
 			$file = LIBRY['INSTANCE'] . substr($file, 1) . '.php';
 		} elseif (substr($class, -1) === 'O') {
