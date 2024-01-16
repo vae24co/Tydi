@@ -1,5 +1,5 @@
 <?php //*** StringX » Tydi™ Framework © 2023 ∞ AO™ • @iamodao • www.osawere.com ∞ Apache License ***//
-class StringX {
+class oStringX {
 
 	// • ==== call → handler - undefined method » [error]
 	public function __call($method, $argument) {
