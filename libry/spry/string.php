@@ -67,6 +67,21 @@ class StringX {
 
 
 
+	// • ==== isEncoded → $var is string & encoded » [boolean]
+	public static function isEncoded($string) {
+		if (self::is($string)) {
+			$decoded = urldecode($string);
+			if ($decoded !== $string) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+
+
+
+
 	// • ==== in • check in string » Boolean
 	public static function in($string, $needle, $strictCase = true) {
 		if (self::isEmpty($string)) {
