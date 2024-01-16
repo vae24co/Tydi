@@ -41,9 +41,7 @@ class RouteX {
 
 			self::$is = new \stdClass();
 			self::$is->route = HttpX::uriWithoutParam();
-			echo self::$is->route;
 			self::$is->method = HttpX::request();
-
 			self::$init = true;
 		}
 		return;
@@ -60,9 +58,7 @@ class RouteX {
 			return DebugX::oversight(__CLASS__, 'Route Duplicate', '~get: "' . $uri . '"');
 		}
 		self::$routes['GET'][$uri] = $handler;
-		if (self::isActive($uri, 'GET') === true) {
-			return self::enact($uri, 'GET');
-		}
+		return self::enact($uri, 'GET');
 	}
 
 
@@ -76,9 +72,7 @@ class RouteX {
 			return DebugX::oversight(__CLASS__, 'Route Duplicate', '~post: "' . $uri . '"');
 		}
 		self::$routes['POST'][$uri] = $handler;
-		if (self::isActive($uri, 'POST') === true) {
-			return self::enact($uri, 'POST');
-		}
+		return self::enact($uri, 'POST');
 	}
 
 
@@ -97,9 +91,7 @@ class RouteX {
 		}
 		self::$routes['GET'][$uri] = $handler;
 		self::$routes['POST'][$uri] = $handler;
-		if (self::isActive($uri, 'ANY') === true) {
-			return self::enact($uri, 'ANY');
-		}
+		return self::enact($uri, 'ANY');
 	}
 
 
@@ -123,7 +115,7 @@ class RouteX {
 
 
 	// • ==== pattern → ... »
-	protected function pattern($route) {
+	protected static function pattern($route) {
 		$pattern = preg_replace('/\/{(.*?)}/', '/(.*?)', $route);
 		$pattern = str_replace('/', '\/', $pattern);
 		$pattern = '/^' . $pattern . '$/';
@@ -134,15 +126,60 @@ class RouteX {
 
 
 
-	// • ==== isActive → ... »
-	protected static function isActive($uri, $method) {
+	// • ==== ismethod → ... »
+	protected static function ismethod($method) {
+		if ($method === 'ANY' && (self::$is->method === 'GET' || self::$is->method === 'POST')) {
+			return true;
+		} elseif ($method === self::$is->method) {
+			return true;
+		}
+		return false;
+	}
+
+
+
+
+
+	// • ==== isuri → ... »
+	protected static function isuri($uri) {
 		if ($uri === self::$is->route) {
-			if ($method === self::$is->method) {
-				return true;
-			} elseif ($method === 'ANY' && (self::$is->method === 'GET' || self::$is->method === 'POST')) {
-				return true;
-			} else {
-				// TODO: pattern matching url
+			return true;
+		}
+		return false;
+	}
+
+
+
+
+
+	// • ==== inroute → ... »
+	protected static function inroute($uri, $method) {
+		if ($method === 'ANY') {
+			$method = 'GET';
+		}
+		if (array_key_exists($uri, self::$routes[$method])) {
+			return true;
+		}
+		return false;
+	}
+
+
+
+
+
+	// • ==== ismatch → ... »
+	protected static function ismatch($uri, $method) {
+		if (self::inroute($uri, $method)) {
+			if (StringX::contain($uri, '{')) {
+				$pattern = self::pattern($uri);
+				if (preg_match($pattern, self::$is->route, $matches)) {
+					array_shift($matches); // Remove the full match from the beginning
+					// self::executeHandler($handler, $matches);
+					return ['handler' => self::$routes[$method][$uri], 'params' => $matches];
+				}
+
+			} elseif (self::isuri($uri) && self::ismethod($method)) {
+				return ['handler' => self::$routes[$method][$uri], 'params' => []];
 			}
 		}
 		return false;
@@ -154,24 +191,61 @@ class RouteX {
 
 	// • ==== enact → ... »
 	protected static function enact($uri, $method) {
-		$routes = self::routes($method);
-		if (empty($routes)) {
-			// TODO: Improve error for proper handling
-			return DebugX::oversight(__CLASS__, 'No Routes Defined', $method);
+
+		$ismatch = self::ismatch($uri, $method);
+		if ($ismatch !== false) {
+			return self::handler($ismatch['handler'], $ismatch['params']);
 		}
-
-		if (!array_key_exists($uri, $routes)) {
-			// TODO: Improve error for proper handling
-			return DebugX::oversight(__CLASS__, 'Route Not Found', $method . ': "' . $uri . '"');
-		}
-
-
-		// TODO: check pattern matching
-
-		$handler = $routes[$uri];
-
-		return self::handler($handler);
+		// return;
 	}
+
+
+
+
+
+
+	// • ==== isActive → ... »
+	protected static function isActive($uri, $method) {
+
+		$pattern = self::pattern($uri);
+
+		if (preg_match($pattern, self::$is->route, $matches)) {
+			// array_shift($matches); // Remove the full match from the beginning
+			// self::executeHandler($handler, $matches);
+			// return;
+		}
+		// DebugX::exit(
+		// 	[
+		// 		'uri' => $uri,
+		// 		'route' => self::$is->route,
+		// 		'pattern'=> $pattern,
+		// 		'matches'=> $matches,
+		// 		'routes' => self::$routes['GET']
+		// 	]
+		// );
+
+
+
+
+		if ($uri === self::$is->route) {
+			if ($method === self::$is->method) {
+				return true;
+			} elseif ($method === 'ANY' && (self::$is->method === 'GET' || self::$is->method === 'POST')) {
+				return true;
+			}
+		}
+
+		DebugX::exit($uri);
+		// TODO: pattern matching url
+		// }
+		// }
+		return false;
+	}
+
+
+
+
+
 
 
 
@@ -179,13 +253,30 @@ class RouteX {
 
 	// • ==== handler → ... »
 	protected static function handler($handler, $params = []) {
+		// DebugX::exit([$handler, $params]);
+
+		// DebugX::exit(
+		// [
+		// 'is_match' => $o,
+		// 'uri' => $uri,
+		// 'method' => $method,
+		// 		'route' => self::$is->route,
+		// 'route' => self::$is->method,
+		// 		'pattern'=> $pattern,
+		// 		'matches'=> $matches,
+		// 		'routes' => self::$routes['GET']
+		// 	]
+		// );
+
+
 		if (is_callable($handler)) {
 			return call_user_func_array($handler, $params);
 		} elseif (is_string($handler) && strpos($handler, '::') !== false) {
 			list($organizr, $action) = explode('::', $handler);
 			return self::organizr($organizr, $action, $params);
 		} else {
-			return DebugX::oversight(__CLASS__, 'Handler Error', $handler);
+			// TODO: Clean this up
+			return DebugX::oversight(__CLASS__, 'Handler Error', self::$is);
 		}
 	}
 
@@ -212,7 +303,11 @@ class User {
 
 
 	public function name($name = 'John') {
-		echo 'Hello ' . $name;
+		// echo 'Hello ' . urldecode($name);
+		if(StringX::isEncoded($name)){
+			$name = urldecode($name);
+		}
+		echo 'Dear ' . $name;
 		return;
 	}
 }
