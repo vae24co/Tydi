@@ -38,7 +38,6 @@ class RouteX {
 				'GET' => [],
 				'POST' => []
 			];
-
 			self::$is = new \stdClass();
 			self::$is->route = HttpX::uriWithoutParam();
 			self::$is->method = HttpX::request();
