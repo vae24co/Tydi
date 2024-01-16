@@ -85,6 +85,9 @@ class DebugX {
 		if (is_array($value)) {
 			return self::array($value);
 		}
+		if (is_callable($value)) {
+			return '<span style="' . self::style('content') . '">Closure</span>';
+		}
 	}
 
 
@@ -210,6 +213,17 @@ class DebugX {
 
 
 
+	// • ==== closure → ... »
+	private static function closure($closure) {
+		$reflection = new ReflectionFunction($closure);
+		$closureName = $reflection->getName();
+		return $closureName;
+	}
+
+
+
+
+
 	// • ==== oversight → ... »
 	public static function oversight($label, $message, $extra = null, $trace = null) {
 		if (strpos($label, FRAMEWORK) === false) {
@@ -223,6 +237,9 @@ class DebugX {
 				} else {
 					$append = '';
 					foreach ($extra as $key => $val) {
+						if (is_callable($val)) {
+							$val = self::closure($val);
+						}
 						$append .= $key . ': ' . $val . ' • ';
 					}
 					$extra = trim($append, ' • ');
@@ -233,8 +250,7 @@ class DebugX {
 			}
 		}
 		if (!empty($trace)) {
-			// $e .= ' <br><span style="color: red;">(' . $trace['file'] . ' on line ' . $trace['line'].')</span>';
-			$e .= ' <br><span style="color: red;"> {' . $trace['file'] . ':' . $trace['line'].'}</span>';
+			$e .= ' <br><span style="color: red;"> {' . $trace['file'] . ':' . $trace['line'] . '}</span>';
 		}
 		return self::exit($e);
 	}
