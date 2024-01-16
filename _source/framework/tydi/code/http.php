@@ -1,6 +1,6 @@
 <?php
 //*** HTTPX » Tydi™ ~ AO™ • @iamodao • www.osawere.com ~ © 2023 • Apache License ***//
-class HTTPX {
+class iHTTPX {
 
 	// ◇ ---- __call • Non-Existent Method » Error
 	public function __call($method, $argument) {
