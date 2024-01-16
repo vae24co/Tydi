@@ -1,0 +1,37 @@
+<?php
+$sql = <<<EOT
+CREATE TABLE `hmo` (
+	`auid` BIGINT NOT NULL AUTO_INCREMENT,
+	`puid` CHAR(20) NULL DEFAULT NULL COLLATE 'utf8mb4_unicode_ci',
+	`suid` CHAR(40) NULL DEFAULT NULL COLLATE 'utf8mb4_unicode_ci',
+	`tuid` CHAR(70) NULL DEFAULT NULL COLLATE 'utf8mb4_unicode_ci',
+	`luid` VARCHAR(70) NULL DEFAULT NULL COLLATE 'utf8mb4_unicode_ci',
+	`entry` VARCHAR(80) NULL DEFAULT 'ORIGIN' COLLATE 'utf8mb4_unicode_ci',
+	`author` VARCHAR(90) NULL DEFAULT 'ORIGIN' COLLATE 'utf8mb4_unicode_ci',
+	`created` DATETIME NULL DEFAULT CURRENT_TIMESTAMP,
+	`updated` DATETIME NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
+	`oauthid` CHAR(70) NULL DEFAULT NULL COLLATE 'utf8mb4_unicode_ci',
+	`title` VARCHAR(100) NULL DEFAULT NULL COLLATE 'utf8mb4_unicode_ci',
+	`code` VARCHAR(20) NULL DEFAULT NULL COLLATE 'utf8mb4_unicode_ci',
+	`email` VARCHAR(100) NULL DEFAULT NULL COLLATE 'utf8mb4_unicode_ci',
+	`phone` VARCHAR(100) NULL DEFAULT NULL COLLATE 'utf8mb4_unicode_ci',
+	`address` VARCHAR(200) NULL DEFAULT NULL COLLATE 'utf8mb4_unicode_ci',
+	`status` ENUM('PENDING','INACTIVE','ACTIVE', 'DELIST') NULL DEFAULT 'PENDING' COLLATE 'utf8mb4_unicode_ci',
+	PRIMARY KEY (`auid`) USING BTREE,
+	UNIQUE INDEX `puid` (`puid`) USING BTREE,
+	UNIQUE INDEX `suid` (`suid`) USING BTREE,
+	UNIQUE INDEX `tuid` (`tuid`) USING BTREE,
+	INDEX `luid` (`luid`) USING BTREE,
+	INDEX `created` (`created`) USING BTREE,
+	INDEX `updated` (`updated`) USING BTREE,
+	INDEX `entry` (`entry`) USING BTREE,
+	INDEX `author` (`author`) USING BTREE,
+	INDEX `oauthid` (`oauthid`) USING BTREE,
+	INDEX `title` (`title`) USING BTREE,
+	INDEX `code` (`code`) USING BTREE,
+	INDEX `email` (`email`) USING BTREE,
+	INDEX `phone` (`phone`) USING BTREE,
+	INDEX `address` (`address`) USING BTREE,
+	INDEX `status` (`status`) USING BTREE) COLLATE='utf8mb4_unicode_ci' ENGINE=InnoDB ROW_FORMAT=DYNAMIC AUTO_INCREMENT=1;
+EOT;
+return $sql;

@@ -1,0 +1,2 @@
+<?php
+Tydi::trace($content);
