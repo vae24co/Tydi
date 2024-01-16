@@ -173,11 +173,9 @@ class RouteX {
 			if (StringX::contain($uri, '{')) {
 				$pattern = self::pattern($uri);
 				if (preg_match($pattern, self::$is->route, $matches)) {
-					array_shift($matches); // Remove the full match from the beginning
-					// self::executeHandler($handler, $matches);
+					array_shift($matches);
 					return ['handler' => self::$routes[$method][$uri], 'params' => $matches];
 				}
-
 			} elseif (self::isuri($uri) && self::ismethod($method)) {
 				return ['handler' => self::$routes[$method][$uri], 'params' => []];
 			}
@@ -191,61 +189,12 @@ class RouteX {
 
 	// • ==== enact → ... »
 	protected static function enact($uri, $method) {
-
 		$ismatch = self::ismatch($uri, $method);
 		if ($ismatch !== false) {
 			return self::handler($ismatch['handler'], $ismatch['params']);
 		}
-		// return;
+		return;
 	}
-
-
-
-
-
-
-	// • ==== isActive → ... »
-	protected static function isActive($uri, $method) {
-
-		$pattern = self::pattern($uri);
-
-		if (preg_match($pattern, self::$is->route, $matches)) {
-			// array_shift($matches); // Remove the full match from the beginning
-			// self::executeHandler($handler, $matches);
-			// return;
-		}
-		// DebugX::exit(
-		// 	[
-		// 		'uri' => $uri,
-		// 		'route' => self::$is->route,
-		// 		'pattern'=> $pattern,
-		// 		'matches'=> $matches,
-		// 		'routes' => self::$routes['GET']
-		// 	]
-		// );
-
-
-
-
-		if ($uri === self::$is->route) {
-			if ($method === self::$is->method) {
-				return true;
-			} elseif ($method === 'ANY' && (self::$is->method === 'GET' || self::$is->method === 'POST')) {
-				return true;
-			}
-		}
-
-		DebugX::exit($uri);
-		// TODO: pattern matching url
-		// }
-		// }
-		return false;
-	}
-
-
-
-
-
 
 
 
@@ -253,22 +202,6 @@ class RouteX {
 
 	// • ==== handler → ... »
 	protected static function handler($handler, $params = []) {
-		// DebugX::exit([$handler, $params]);
-
-		// DebugX::exit(
-		// [
-		// 'is_match' => $o,
-		// 'uri' => $uri,
-		// 'method' => $method,
-		// 		'route' => self::$is->route,
-		// 'route' => self::$is->method,
-		// 		'pattern'=> $pattern,
-		// 		'matches'=> $matches,
-		// 		'routes' => self::$routes['GET']
-		// 	]
-		// );
-
-
 		if (is_callable($handler)) {
 			return call_user_func_array($handler, $params);
 		} elseif (is_string($handler) && strpos($handler, '::') !== false) {
@@ -285,7 +218,7 @@ class RouteX {
 
 
 	// • ==== organizr → ... »
-	protected static function organizr($organizr, $action = 'index', $params = []) {
+	protected static function organizr($organizr, $action, $params = []) {
 		$instance = new $organizr();
 		return call_user_func_array([$instance, $action], $params);
 	}
@@ -304,7 +237,7 @@ class User {
 
 	public function name($name = 'John') {
 		// echo 'Hello ' . urldecode($name);
-		if(StringX::isEncoded($name)){
+		if (StringX::isEncoded($name)) {
 			$name = urldecode($name);
 		}
 		echo 'Dear ' . $name;
