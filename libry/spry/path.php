@@ -44,9 +44,20 @@ class PathX {
 
 	// • ==== to → ... »
 	public static function to($source = null) {
-		if (is_null($source)) {
-			return RD;
+		$path = null;
+
+		switch ($source) {
+
+			case 'ORGANIZR':
+				$path = PATH['BACKEND']['ORGAN'];
+				break;
 		}
+
+		if (!empty($path) && !is_null($source)) {
+			return self::$ORIG . $path;
+		}
+
+		return RD;
 	}
 
 
