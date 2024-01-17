@@ -6,4 +6,4 @@ _source/ignore/
 
 # File
 .env
-debug.php
+# debug.php
