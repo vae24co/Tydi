@@ -10,12 +10,14 @@ defined('SYSTEM') || define('SYSTEM', 'ONLINE'); # [ONLINE|OFFLINE]
 defined('ENVIRONMENT') || define('ENVIRONMENT', 'DEVELOPMENT'); # [DEVELOPMENT|STAGING|PRODUCTION]
 defined('MACHINE') || define('MACHINE', 'LOCAL'); # [LOCAL|REMOTE]
 
+// • Directory & Path
 defined('LIBRY') || define('LIBRY', RD . 'libry' . DS);
 defined('ORIG') || define('ORIG', RD . 'orig' . DS);
 
 
 // • Clean String
-const CS = ['@<script[^>]*?>.*?</script>@si', '@<[\ /\!]*?[^<>]*?>@si', '@<style[^>]*?>.*?</style>@siU', '@<![\s\S]*?--[ \t\n\r]*>@'];
+const CS = ['@<script[^>]*?>.*?</script>@si', '@<[\ /\!]*?[^<>]*?>@si', '@<style[^>]*?>.*?</style>@siU', '@
+		<![\s\S]*?--[ \t\n\r]*>@'];
 
 
 // • If System Offline or Undefined
@@ -50,6 +52,18 @@ foreach ($namespaces as $namespace) {
 }
 
 
+// • Custom Directory & Path
+// TODO: Implement File Loader with Framework Error
+$file = LIBRY . 'path.php';
+if (!is_file($file)) {
+	$error = '<strong>' . FRAMEWORK . '™</strong> • Path Unavailable! → [<em>' . $file . '</em>]';
+	exit($error);
+}
+include $file;
+
+
+
+DebugX::exit(PATH);
 // • Load Debugger File
 if (is_file(RD . 'debug.php')) {
 	include RD . 'debug.php';
