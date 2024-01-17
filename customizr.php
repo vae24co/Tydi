@@ -95,15 +95,28 @@ if (!defined('SYSTEM') || SYSTEM === 'OFFLINE') {
 }
 
 
-// TODO: Implement Fusion to Determine ORIG Directory
-// TODO: Implement File Loader with Framework Error
+
+// • AutoloadX
+$autoload = LIBRY['INIT'] . 'autoload.php';
+if (is_file($autoload)) {
+	require $autoload;
+	if (function_exists('AutoloadX')) {
+		spl_autoload_register('AutoloadX');
+	}
+}
 
 
 // • Load Router
 PathX::init(['ORIG' => $ORIG]);
 $file = PathX::routzr('app');
-require $file;
+// require $file;
+
+
+$o = new LeomsOrganizr;
+exit;
 
 
 // • Load Debugger
 PathX::load('DEBUG');
+// TODO: Implement Fusion to Determine ORIG Directory
+// TODO: Implement File Loader with Framework Error
