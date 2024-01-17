@@ -39,5 +39,5 @@ RouteX::get('/user/{id}', function () {
 });
 
 $debug = RouteX::routes();
-DebugX::go($debug);
+// DebugX::go($debug);
 ?>
