@@ -62,8 +62,6 @@ if (!is_file($file)) {
 include $file;
 
 
-
-DebugX::exit(PATH);
 // • Load Debugger File
 if (is_file(RD . 'debug.php')) {
 	include RD . 'debug.php';
