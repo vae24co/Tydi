@@ -34,9 +34,9 @@
 
 // RouteX::any('/contact', 'User::name');
 
-RouteX::get('/user/{id}', function () {
-	echo 'User!';
-});
+// RouteX::get('/user/{id}', function () {
+// 	echo 'User!';
+// });
 
-$debug = RouteX::routes();
+// $debug = RouteX::routes();
 // DebugX::go($debug);
