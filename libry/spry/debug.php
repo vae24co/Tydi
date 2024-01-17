@@ -255,4 +255,62 @@ class DebugX {
 		return self::exit($e);
 	}
 
+
+
+
+
+	// • ==== callerX → report class/function unavailable »
+	public static function callerX($caller, $type, &$file = null) {
+		if ($type === 'CLASS' && !class_exists($caller) || $type === 'FUNCTION' && !function_exists($caller)) {
+			return self::oversightX($caller, ucfirst(strtolower($type)) . ' Unavailable!', $file);
+		}
+		return true;
+	}
+
+
+
+
+	// • ==== classX → report class unavailable »
+	public static function classX($filename, $class = null, $path = null) {
+		if (is_null($path)) {
+			$filepath = $filename;
+		} elseif (strlen($path) > 1) {
+
+			if (StringX::endWithAny($class, ['zr', 'API', 'App', 'Site'])) {
+				$filename = strtolower(Env::version()) . DS . $filename;
+			}
+
+			if (substr($path, -(strlen(DS))) === DS) {
+				$filepath = $path . $filename;
+			} else {
+				$filepath = $path . DS . $filename;
+			}
+		}
+		if (is_file($filepath)) {
+			require_once $filepath;
+			return $filepath;
+		} else {
+			$filepath = StringX::swapLast($filepath, strtolower(Env::version()) . DS);
+			if (is_file($filepath)) {
+				require_once $filepath;
+				return $filepath;
+			}
+		}
+
+		if (!is_file($filepath)) {
+			if (empty($class)) {
+				$class = pathinfo($filepath, PATHINFO_FILENAME);
+			}
+			$extra = $filepath;
+			if (defined('ENVIRONMENT')) {
+				if (ENVIRONMENT === 'STAGING') {
+					$extra = basename($filename);
+				} elseif (ENVIRONMENT === 'PRODUCTION') {
+					$extra = strtolower($class);
+				}
+			}
+			self::callerX($class, 'CLASS', $extra);
+		}
+	}
+
 } //> end of DebugX
