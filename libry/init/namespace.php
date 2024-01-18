@@ -9,6 +9,7 @@ $namespace = [
 	'EnvX' => LIBRY['SPRY'] . 'env.php',
 	'RouteX' => LIBRY['SPRY'] . 'route.php',
 	'PathX' => LIBRY['SPRY'] . 'path.php',
+	'FrontendX' => LIBRY['SPRY'] . 'frontend.php',
 ];
 
 return $namespace;
