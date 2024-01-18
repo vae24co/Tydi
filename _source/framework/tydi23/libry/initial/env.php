@@ -102,22 +102,6 @@ class Env {
 
 
 
-	// • ==== version → get code version
-	public static function version($version = null) {
-
-		// » set version
-		if (!empty($version)) {
-			self::$version = $version;
-			return true;
-		}
-
-		// » set default version
-		if (empty(self::$version)) {
-			self::$version = 'oreo';
-		}
-
-		// » get version
-		return self::$version;
 	}
 
 
