@@ -245,7 +245,7 @@ class DebugX {
 					$extra = trim($append, ' • ');
 				}
 			}
-			if (is_string($extra)) {
+			if (is_string($extra) || is_numeric($extra)) {
 				$e .= ' → [<em>' . $extra . '</em>]';
 			}
 		}
