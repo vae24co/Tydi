@@ -49,6 +49,83 @@ class RouteX {
 
 
 
+	// • ==== clean → ... »
+	private static function clean($uri, $isInput = true) {
+		if ($isInput) {
+			if ($uri === 'index' || $uri === '/index') {
+				$uri = '/';
+			}
+			if (!StringX::beginWith($uri, '/')) {
+				$uri = '/' . $uri;
+			}
+		} else {
+			if ($uri === '/') {
+				$uri = 'index';
+			} elseif (StringX::beginWith($uri, '/')) {
+				$uri = StringX::cropBegin($uri, '/');
+			}
+		}
+		return $uri;
+	}
+
+
+
+
+
+	// • ==== make → ... »
+	private static function make($method, $uri, $handler) {
+		$uri = self::clean($uri, true);
+		self::$routes['GET'][$uri] = $handler;
+		return;
+	}
+
+
+
+
+
+	// • ==== organizr → ... »
+	protected static function organizr($organizr, $action, $params = []) {
+		$instance = new $organizr();
+		if (method_exists($instance, $action)) {
+			return call_user_func_array([$instance, $action], $params);
+		}
+		return DebugX::oversight($organizr, 'Organizr: Method Unavailable', $action);
+	}
+
+
+
+
+
+	// • ==== handler → ... »
+	protected static function handler($handler, $params = []) {
+		if (is_callable($handler)) {
+			return call_user_func_array($handler, $params);
+		} elseif (is_string($handler) && strpos($handler, '::') !== false) {
+			list($organizr, $action) = explode('::', $handler);
+			return self::organizr($organizr, $action, $params);
+		} else {
+			// TODO: Clean this up
+			return DebugX::oversight(__CLASS__, 'Handler Error', self::$is);
+		}
+	}
+
+
+
+
+
+	// • ==== enact → ... »
+	protected static function enact($uri, $method) {
+		$uri = self::clean($uri, true);
+		$ismatch = self::ismatch($uri, $method);
+		if ($ismatch !== false) {
+			return self::handler($ismatch['handler'], $ismatch['params']);
+		}
+		return;
+	}
+
+
+
+
 
 	// • ==== get → ... »
 	public static function get($uri, $handler) {
@@ -56,7 +133,7 @@ class RouteX {
 		if (array_key_exists($uri, self::$routes['GET'])) {
 			return DebugX::oversight(__CLASS__, 'Route Duplicate', '~get: "' . $uri . '"');
 		}
-		self::$routes['GET'][$uri] = $handler;
+		self::make('GET', $uri, $handler);
 		return self::enact($uri, 'GET');
 	}
 
@@ -70,7 +147,7 @@ class RouteX {
 		if (array_key_exists($uri, self::$routes['POST'])) {
 			return DebugX::oversight(__CLASS__, 'Route Duplicate', '~post: "' . $uri . '"');
 		}
-		self::$routes['POST'][$uri] = $handler;
+		self::make('POST', $uri, $handler);
 		return self::enact($uri, 'POST');
 	}
 
@@ -88,8 +165,8 @@ class RouteX {
 		} elseif (array_key_exists($uri, self::$routes['POST'])) {
 			return DebugX::oversight(__CLASS__, 'Route Duplicate', '~post: "' . $uri . '"');
 		}
-		self::$routes['GET'][$uri] = $handler;
-		self::$routes['POST'][$uri] = $handler;
+		self::make('GET', $uri, $handler);
+		self::make('POST', $uri, $handler);
 		return self::enact($uri, 'ANY');
 	}
 
@@ -167,15 +244,22 @@ class RouteX {
 
 
 	// • ==== ismatch → ... »
-	protected static function ismatch($uri, $method) {
+	protected static function ismatch($uri, $method, $returnBool = false) {
+		$uri = self::clean($uri, true);
 		if (self::inroute($uri, $method)) {
 			if (StringX::contain($uri, '{')) {
 				$pattern = self::pattern($uri);
 				if (preg_match($pattern, self::$is->route, $matches)) {
 					array_shift($matches);
+					if ($returnBool) {
+						return true;
+					}
 					return ['handler' => self::$routes[$method][$uri], 'params' => $matches];
 				}
 			} elseif (self::isuri($uri) && self::ismethod($method)) {
+				if ($returnBool) {
+					return true;
+				}
 				return ['handler' => self::$routes[$method][$uri], 'params' => []];
 			}
 		}
@@ -186,29 +270,13 @@ class RouteX {
 
 
 
-	// • ==== enact → ... »
-	protected static function enact($uri, $method) {
-		$ismatch = self::ismatch($uri, $method);
-		if ($ismatch !== false) {
-			return self::handler($ismatch['handler'], $ismatch['params']);
-		}
-		return;
-	}
-
-
-
-
-
-	// • ==== handler → ... »
-	protected static function handler($handler, $params = []) {
-		if (is_callable($handler)) {
-			return call_user_func_array($handler, $params);
-		} elseif (is_string($handler) && strpos($handler, '::') !== false) {
-			list($organizr, $action) = explode('::', $handler);
-			return self::organizr($organizr, $action, $params);
-		} else {
-			// TODO: Clean this up
-			return DebugX::oversight(__CLASS__, 'Handler Error', self::$is);
+	// • ==== is → ... »
+	public static function is($route = null, $method = 'ANY') {
+		if (is_null($route)) {
+			$route = self::$is->route;
+			return self::clean($route, false);
+		} elseif (strlen($route) > 0) {
+			return self::ismatch($route, $method, true);
 		}
 	}
 
@@ -216,33 +284,27 @@ class RouteX {
 
 
 
-	// • ==== organizr → ... »
-	protected static function organizr($organizr, $action, $params = []) {
-		$instance = new $organizr();
-		if(method_exists($instance, $action)){
-			return call_user_func_array([$instance, $action], $params);
-		}
-		return DebugX::oversight($organizr, 'Organizr: Method Unavailable', $action);
+	// • ==== isGet → ... »
+	public static function isGet($route = null) {
+		return self::is($route, 'GET');
+	}
+
+
+
+
+
+	// • ==== isPost → ... »
+	public static function isPost($route = null) {
+		return self::is($route, 'POST');
+	}
+
+
+
+
+
+	// • ==== isAny → ... »
+	public static function isAny($route = null) {
+		return self::is($route, 'ANY');
 	}
 
 } //> end of RouteX
-
-
-
-class User {
-	public function index() {
-		echo 'Index of User';
-		return;
-	}
-
-
-
-	public function name($name = 'John') {
-		// echo 'Hello ' . urldecode($name);
-		if (StringX::isEncoded($name)) {
-			$name = urldecode($name);
-		}
-		echo 'Dear ' . $name;
-		return;
-	}
-}
