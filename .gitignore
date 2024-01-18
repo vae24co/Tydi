@@ -5,6 +5,6 @@ _source/ignore/
 
 
 # File
-.env
+*.env
 debug.php
 orig/
