@@ -93,4 +93,21 @@ class EnvX {
 	}
 
 
+
+
+
+	// • ==== database → ... »
+	public static function database(){
+		$config = [];
+		foreach(self::$constants as $key => $value){
+			if(StringX::beginWith($key, 'DATABASE')){
+				$key = strtolower(StringX::cropBegin($key, 'DATABASE_'));
+				$config[$key] = $value;
+			}
+		}
+		return ArrayX::toObj($config);
+	}
+
+
+
 } //> end of EnvX
