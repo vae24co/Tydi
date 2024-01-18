@@ -360,6 +360,19 @@ class StringX {
 
 
 
+	// • ==== beforeAs • string Before character or the string
+	public static function beforeAs($string, $needle, $strip = true, $strictCase = false) {
+		$stringBefore = self::before($string, $needle, $strip, $strictCase);
+		if (!$stringBefore) {
+			return $string;
+		}
+		return $stringBefore;
+	}
+
+
+
+
+
 	// • ==== after • String After Character
 	public static function after($string, $needle, $strip = true, $strictCase = false, $occurrence = 'FIRST') {
 		if (self::isNotEmpty($string) && self::in($string, $needle, $strictCase)) {
@@ -388,6 +401,19 @@ class StringX {
 			}
 		}
 		return false;
+	}
+
+
+
+
+
+	// • ==== afterAs • string after character or the string
+	public static function afterAs($string, $needle, $strip = true, $strictCase = false, $occurrence = 'FIRST') {
+		$stringAfter = self::before($string, $needle, $strip, $strictCase);
+		if (!$stringAfter) {
+			return $string;
+		}
+		return $stringAfter;
 	}
 
 
