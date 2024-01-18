@@ -54,12 +54,21 @@ class FrontendX {
 
 
 
-	// • ==== layout → ... »
-	public static function layout($layout, $content = null) {
+	// • ==== loader → ... »
+	private static function loader($file, $content = []) {
 		$record = self::$record;
 		$content = self::content($content);
+		return require $file;
+	}
+
+
+
+
+
+	// • ==== layout → ... »
+	public static function layout($layout, $content = []) {
 		$layout = PathX::layout($layout);
-		return require $layout;
+		return self::loader($layout, $content);
 	}
 
 
@@ -67,11 +76,9 @@ class FrontendX {
 
 
 	// • ==== view → ... »
-	public static function view($view, $content = null) {
-		$record = self::$record;
-		$content = self::content($content);
+	public static function view($view, $content = []) {
 		$view = PathX::view($view);
-		return require $view;
+		return self::loader($view, $content);
 	}
 
 
@@ -79,12 +86,9 @@ class FrontendX {
 
 
 	// • ==== slice → ... »
-	public static function slice($slice, $content = null) {
-		$record = self::$record;
-		$content = self::content($content);
+	public static function slice($slice, $content = []) {
 		$slice = PathX::slice($slice);
-		return require $slice;
+		return self::loader($slice, $content);
 	}
-
 
 } //> end of FrontendX
