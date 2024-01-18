@@ -3,6 +3,7 @@
 class PathX {
 
 	// • property
+	private static $init;
 	private static $ORIG;
 
 
@@ -33,8 +34,10 @@ class PathX {
 	public static function init(array $config = []) {
 		if (isset($config['ORIG'])) {
 			self::$ORIG = $config['ORIG'];
-		} else {
+			self::$init = true;
+		} elseif (self::$init !== true) {
 			self::$ORIG = RD . 'orig' . DS;
+			self::$init = true;
 		}
 		return;
 	}
@@ -70,6 +73,21 @@ class PathX {
 		$file = self::$ORIG . PATH['BACKEND']['ROUT'] . $routzr;
 		if (!is_file($file)) {
 			$error = '<strong>' . FRAMEWORK . '™</strong> • Routzr Unavailable! → [<em>' . $file . '</em>]';
+			exit($error);
+		}
+		return $file;
+	}
+
+
+
+
+
+	// • ==== env → ... »
+	public static function env($routzr) {
+		$env = strtolower($routzr) . '.env';
+		$file = self::$ORIG . $env;
+		if (!is_file($file)) {
+			$error = '<strong>' . FRAMEWORK . '™</strong> • Env Unavailable! → [<em>' . $file . '</em>]';
 			exit($error);
 		}
 		return $file;
