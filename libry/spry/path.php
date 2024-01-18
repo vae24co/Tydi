@@ -82,6 +82,60 @@ class PathX {
 
 
 
+	// • ==== layout → ... »
+	public static function layout($layout = null) {
+		$path = self::$ORIG . PATH['FRONTEND']['LAYOUT'];
+		if (!empty($layout)) {
+			$file = $path . strtolower($layout) . '.php';
+			if (!is_file($file)) {
+				$error = '<strong>' . FRAMEWORK . '™</strong> • Layout Unavailable! → [<em>' . $file . '</em>]';
+				DebugX::exit($error);
+			}
+			return $file;
+		}
+		return $path;
+	}
+
+
+
+
+
+	// • ==== view → ... »
+	public static function view($view = null) {
+		$path = self::$ORIG . PATH['FRONTEND']['VIEW'];
+		if (!empty($view)) {
+			$file = $path . strtolower($view) . '.php';
+			if (!is_file($file)) {
+				$error = '<strong>' . FRAMEWORK . '™</strong> • View Unavailable! → [<em>' . $file . '</em>]';
+				DebugX::exit($error);
+			}
+			return $file;
+		}
+		return $path;
+	}
+
+
+
+
+
+	// • ==== slice → ... »
+	public static function slice($slice = null) {
+		$path = self::$ORIG . PATH['FRONTEND']['SLICE'];
+		if (!empty($slice)) {
+			$file = $path . strtolower($slice) . '.php';
+			if (!is_file($file)) {
+				$error = '<strong>' . FRAMEWORK . '™</strong> • Slice Unavailable! → [<em>' . $file . '</em>]';
+				DebugX::exit($error);
+			}
+			return $file;
+		}
+		return $path;
+	}
+
+
+
+
+
 	// • ==== env → ... »
 	public static function env($routzr) {
 		$env = strtolower($routzr) . '.env';
