@@ -262,7 +262,7 @@ class DebugX {
 	// • ==== callerX → report class/function unavailable »
 	public static function callerX($caller, $type, &$file = null) {
 		if ($type === 'CLASS' && !class_exists($caller) || $type === 'FUNCTION' && !function_exists($caller)) {
-			return self::oversightX($caller, ucfirst(strtolower($type)) . ' Unavailable!', $file);
+			return self::oversight($caller, ucfirst(strtolower($type)) . ' Unavailable!', $file);
 		}
 		return true;
 	}
@@ -277,7 +277,7 @@ class DebugX {
 		} elseif (strlen($path) > 1) {
 
 			if (StringX::endWithAny($class, ['zr', 'API', 'App', 'Site'])) {
-				$filename = strtolower(Env::version()) . DS . $filename;
+				$filename = strtolower(EnvX::version('NAME')) . DS . $filename;
 			}
 
 			if (substr($path, -(strlen(DS))) === DS) {
@@ -290,7 +290,7 @@ class DebugX {
 			require_once $filepath;
 			return $filepath;
 		} else {
-			$filepath = StringX::swapLast($filepath, strtolower(Env::version()) . DS);
+			$filepath = StringX::swapLast($filepath, strtolower(EnvX::version('NAME')) . DS);
 			if (is_file($filepath)) {
 				require_once $filepath;
 				return $filepath;
