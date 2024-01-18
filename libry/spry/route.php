@@ -219,7 +219,10 @@ class RouteX {
 	// • ==== organizr → ... »
 	protected static function organizr($organizr, $action, $params = []) {
 		$instance = new $organizr();
-		return call_user_func_array([$instance, $action], $params);
+		if(method_exists($instance, $action)){
+			return call_user_func_array([$instance, $action], $params);
+		}
+		return DebugX::oversight($organizr, 'Organizr: Method Unavailable', $action);
 	}
 
 } //> end of RouteX
