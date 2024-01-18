@@ -125,6 +125,24 @@ class HttpX {
 
 
 
+	// • ==== urlWithParam → ... »
+	public static function urlWithParam() {
+		self::init();
+		return self::scheme() . self::domain() . self::uri(true);
+	}
+
+
+
+
+	// • ==== urlWithoutParam → ... »
+	public static function urlWithoutParam() {
+		self::init();
+		return self::scheme() . self::domain() . self::uri(false);
+	}
+
+
+
+
 
 	// • ==== urlWithPort → ... »
 	public static function urlWithPort($withParam = false) {
