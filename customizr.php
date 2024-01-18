@@ -106,14 +106,19 @@ if (is_file($autoload)) {
 }
 
 
-// • Load Router
+// • Initialize Path
 PathX::init(['ORIG' => $ORIG]);
+
+
+// • Load Environment
+$env = PathX::env('app');
+EnvX::load($env);
+
+// • Load Router
 $file = PathX::routzr('app');
-// require $file;
+require $file;
 
 
-$o = new LeomsOrganizr;
-exit;
 
 
 // • Load Debugger
