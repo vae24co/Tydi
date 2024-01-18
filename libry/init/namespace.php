@@ -3,6 +3,7 @@
 $namespace = [
 	'DebugX' => LIBRY['SPRY'] . 'debug.php',
 	'StringX' => LIBRY['SPRY'] . 'string.php',
+	'ArrayX' => LIBRY['SPRY'] . 'array.php',
 	'ServerX' => LIBRY['SPRY'] . 'server.php',
 	'UriX' => LIBRY['SPRY'] . 'uri.php',
 	'HttpX' => LIBRY['SPRY'] . 'http.php',
@@ -12,6 +13,7 @@ $namespace = [
 	'PathX' => LIBRY['SPRY'] . 'path.php',
 	'RedirectX' => LIBRY['SPRY'] . 'redirect.php',
 	'FrontendX' => LIBRY['SPRY'] . 'frontend.php',
+	'DatabaseX' => LIBRY['SPRY'] . 'database.php',
 ];
 
 return $namespace;
