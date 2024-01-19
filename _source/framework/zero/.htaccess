@@ -1,0 +1,175 @@
+# /***
+# * ZERO™ Library is a vanilla, evolving collection for developing solutions using web technology
+# * Originator → Anthony Osawere - @iamodao - www.osawere.com | AO™ © 2022 | Apache License
+# * ============================================================================================
+# * htaccess ~ The root htaccess • VERSION » alpha-0.0.1 ***/
+
+#Turn On Apache Rewrite Engine
+RewriteEngine on
+
+#Inherit Parent Directory's Rules
+RewriteOptions inherit
+
+#Enable Symbolic Link
+Options +FollowSymLinks
+
+#Set UTF-8 as Default Character set
+AddDefaultCharset utf-8
+
+#Preserve Bandwidth For PHP Enabled Servers
+<ifmodule mod_php4.c>
+	php_value zlib.output_compression 16386
+</ifmodule>
+
+#Process The Following File Extensions As PHP
+AddType application/x-httpd-php .php .inc .phtml .html
+
+#Alternate Default Index Files
+DirectoryIndex index.php index.html
+
+#Enable Gzip Compression
+<IfModule mod_gzip.c>
+	mod_gzip_on Yes
+	mod_gzip_dechunk Yes
+	mod_gzip_item_include file \.(html?|txt|css|js|php)$
+	mod_gzip_item_include mime ^application/x-javascript.*
+	mod_gzip_item_exclude mime ^asset/.*
+	mod_gzip_item_exclude rspheader ^source-Encoding:.*gzip.*
+</IfModule>
+
+#Disable Server Signature
+ServerSignature Off
+
+#Set Server Timezone
+SetEnv TZ Africa/Lagos
+
+#Set The Server Administrator Email
+SetEnv SERVER_ADMIN admin@vae24.com
+
+#Implement Caching
+<FilesMatch "\.(flv|gif|jpg|jpeg|png|ico|js|css|pdf|swf|html|htm|txt)$">
+	Header set Cache-Control "max-age=86400"
+</FilesMatch>
+
+#Set Default Language
+DefaultLanguage en-US
+
+#Define Base Directory Path (*only when base is different from current directory)
+RewriteBase /
+
+#Disable Index Listing For Directory (*possible GOTCHA when using [Options All -Indexes] | [Options -Indexes])
+Options All -Indexes
+
+#RewriteCond %{THE_REQUEST} favicon.ico [NC]
+# RewriteRule (.*) https://www.wowcatholic.com/ao/grafix/favicon.png [NC,QSA,END]
+
+#Rewrite Existing Directory
+RewriteRule ^asset$ /asset/ [NC,QSA,END]
+RewriteRule ^build$ /build/ [NC,QSA,END]
+RewriteRule ^cloud$ /cloud/ [NC,QSA,END]
+RewriteRule ^zero$ /zero/ [NC,QSA,END]
+
+#Forbid HTTP Access To Directory
+RedirectMatch 403 ^/build/$
+RedirectMatch 403 ^/zero/(.*)$
+
+#Forbid Virtual Directory
+RedirectMatch 403 ^/data/?$
+RedirectMatch 403 ^/redirect/?$
+RedirectMatch 403 ^/xhr/?$
+
+#HTTP Error Handling [Forbidden | NotFound | Bad Request]
+ErrorDocument 400 /index.php?link=http&otype=400
+ErrorDocument 403 /index.php?link=http&otype=403
+ErrorDocument 404 /index.php?link=http&otype=404
+
+#Don't rewrite existing file/directory (*when not using index for all redirect)
+# RewriteCond %{REQUEST_FILENAME} !-f
+# RewriteCond %{REQUEST_FILENAME} !-d
+
+#Rewrite API
+RewriteCond %{HTTP_HOST} ^(api\.woca\.co)$
+RewriteRule ^$ /index.php?link=index&osource=main&oplatform=api [NC,QSA,END]
+RewriteCond %{HTTP_HOST} ^(api\.woca\.co)$
+RewriteRule ^(.+)$ /index.php?link=$1&osource=main&oplatform=api [NC,QSA,END]
+
+RewriteCond %{HTTP_HOST} ^((?!api\.).+\.)(woca\.co)$
+RewriteRule ^api\/$ /index.php?link=index&osource=%1&oplatform=api [NC,QSA,END]
+RewriteCond %{HTTP_HOST} ^((?!api\.).+\.)(woca\.co)$
+RewriteRule ^api\/(.+)$ /index.php?link=$1&osource=%1&oplatform=api [NC,QSA,END]
+
+RewriteRule ^api\/$ /index.php?link=index&osource=main&oplatform=api [NC,QSA,END]
+RewriteRule ^api\/(.+)$ /index.php?link=$1&osource=main&oplatform=api [NC,QSA,END]
+
+
+
+#Rewrite - ASSET
+RewriteCond %{HTTP_HOST} ^((?!api\.|app\.|www\.).+\.)(woca\.co)$
+RewriteRule ^asset\/(.+)$ /build/o%1/layout/arczr/$1 [NC,QSA,END]
+# RewriteCond %{HTTP_HOST} ^(app\.woca\.co)$
+# RewriteRule ^asset\/(.+)$ /build/main/layout/arczr/$1 [NC,QSA,END]
+# RewriteRule ^asset\/(.+)$ /build/main/layout/arczr/$1 [NC,QSA,END]
+
+
+
+#Rewrite - FAVICON
+RewriteCond %{HTTP_HOST} ^((?!api\.|app\.|www\.).+\.)(woca\.co)$
+RewriteRule ^favicon\.ico$ /build/o%1/layout/arczr/favicon/favicon.ico [NC,QSA,END]
+RewriteCond %{HTTP_HOST} ^(app\.woca\.co)$
+RewriteRule ^favicon\.ico$ /build/main/layout/arczr/favicon/favicon.ico [NC,QSA,END]
+RewriteRule ^favicon\.ico$ /build/main/layout/arczr/favicon/favicon.ico [NC,QSA,END]
+
+
+
+
+#Rewrite - CSS
+# RewriteCond %{HTTP_HOST} ^((www|app)\.)(woca\.co)$
+# RewriteRule ^css\/(.+)$ /source/main/asset/css/$1 [NC,QSA,END]
+# RewriteCond %{HTTP_HOST} ^((?!api\.|app\.|www\.).+\.)(woca\.co)$
+# RewriteRule ^css\/(.+)$ /source/o%1/asset/css/$1 [NC,QSA,END]
+# RewriteRule ^css\/(.+)$ /source/main/asset/css/$1 [NC,QSA,END]
+
+# #Rewrite - JS
+# RewriteCond %{HTTP_HOST} ^((www|app)\.)(woca\.co)$
+# RewriteRule ^js\/(.+)$ /source/main/asset/js/$1 [NC,QSA,END]
+# RewriteCond %{HTTP_HOST} ^((?!api\.|app\.|www\.).+\.)(woca\.co)$
+# RewriteRule ^js\/(.+)$ /source/o%1/asset/js/$1 [NC,QSA,END]
+# RewriteRule ^js\/(.+)$ /source/main/asset/js/$1 [NC,QSA,END]
+
+# #Rewrite - PLUGIN
+# RewriteCond %{HTTP_HOST} ^((www|app)\.)(woca\.co)$
+# RewriteRule ^plugin\/(.+)$ /source/main/asset/plugin/$1 [NC,QSA,END]
+# RewriteCond %{HTTP_HOST} ^((?!api\.|app\.|www\.).+\.)(woca\.co)$
+# RewriteRule ^plugin\/(.+)$ /source/o%1/asset/plugin/$1 [NC,QSA,END]
+# RewriteRule ^plugin\/(.+)$ /source/main/asset/plugin/$1 [NC,QSA,END]
+
+# #Rewrite - CLOUD
+# RewriteCond %{HTTP_HOST} ^((www|app)\.)(woca\.co)$
+# RewriteRule ^cloud\/(.+)$ /source/main/asset/upload/$1 [NC,QSA,END]
+# RewriteCond %{HTTP_HOST} ^((?!api\.|app\.|www\.).+\.)(woca\.co)$
+# RewriteRule ^cloud\/(.+)$ /source/o%1/asset/upload/$1 [NC,QSA,END]
+# RewriteRule ^cloud\/(.+)$ /source/main/asset/upload/$1 [NC,QSA,END]
+
+#Rewrite APP
+RewriteCond %{HTTP_HOST} ^(app\.woca\.co)$
+RewriteRule ^$ /index.php?link=index&osource=main&oplatform=app [NC,QSA,END]
+RewriteCond %{HTTP_HOST} ^(app\.woca\.co)$
+RewriteRule ^(.+)$ /index.php?link=$1&osource=main&oplatform=app [NC,QSA,END]
+
+RewriteCond %{HTTP_HOST} ^((?!app\.).+\.)(woca\.co)$
+RewriteRule ^app\/$ /index.php?link=index&osource=%1&oplatform=app [NC,QSA,END]
+RewriteCond %{HTTP_HOST} ^((?!app\.).+\.)(woca\.co)$
+RewriteRule ^app\/(.+)$ /index.php?link=$1&osource=%1&oplatform=app [NC,QSA,END]
+
+RewriteRule ^app\/$ /index.php?link=index&osource=main&oplatform=app [NC,QSA,END]
+RewriteRule ^app\/(.+)$ /index.php?link=$1&osource=main&oplatform=app [NC,QSA,END]
+
+#Rewrite SITE
+RewriteCond %{HTTP_HOST} ^((?!api\.|app\.).+\.)(woca\.co)$
+RewriteRule ^((?!(.*).(ico|png|jpg|svg|pdf|css|js|eot|woff|woff2|ttf|html|php)$)(?!api\/|app\/(.*)$))$ /index.php?link=index&osource=%1&oplatform=site [NC,QSA,END]
+
+RewriteCond %{HTTP_HOST} ^((?!api\.|app\.).+\.)(woca\.co)$
+RewriteRule ^((?!(.*).(ico|png|jpg|svg|pdf|css|js|eot|woff|woff2|ttf|html|php)$)(?!api\/|app\/(.*)$).+)$ /index.php?link=$1&osource=%1&oplatform=site [NC,QSA,END]
+
+RewriteRule ^((?!(.*).(ico|png|jpg|svg|pdf|css|js|eot|woff|woff2|ttf|html|php)$)(?!api\/|app\/(.*)$))$ /index.php?link=index&osource=main&oplatform=site [NC,QSA,END]
+RewriteRule ^((?!(.*).(ico|png|jpg|svg|pdf|css|js|eot|woff|woff2|ttf|html|php)$)(?!api\/|app\/(.*)$).+)$ /index.php?link=$1&osource=main&oplatform=site [NC,QSA,END]
