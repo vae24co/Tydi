@@ -58,6 +58,7 @@ class DatabaseX {
 
 	// • ==== create → ... »
 	public static function create($table, $data) {
+		$data = DataX::create($data);
 		$columns = implode(", ", array_keys($data));
 		$values = ":" . implode(", :", array_keys($data));
 
