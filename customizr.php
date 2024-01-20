@@ -21,6 +21,7 @@ $ORIG = RD . 'orig' . DS;
 $LIBRY = RD . 'libry' . DS;
 $LIBRY = [
 	'INIT' => $LIBRY . 'init' . DS,
+	'OBJ' => $LIBRY . 'obj' . DS,
 	'SPRY' => $LIBRY . 'spry' . DS
 ];
 
