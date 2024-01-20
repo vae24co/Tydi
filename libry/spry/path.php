@@ -171,4 +171,93 @@ class PathX {
 		return;
 	}
 
+
+
+
+
+	// • ==== check → check if path or file exist »
+	public static function check($path) {
+		// TODO: implement code
+		return $path;
+	}
+
+
+
+
+
+	// • ==== css → ... »
+	public static function css($file = null) {
+		$path = PATH['ASSET']['CSS'];
+		if (!is_null($file)) {
+			$path .= $file . '.css';
+		}
+		return self::check($path);
+	}
+
+
+
+
+
+	// • ==== js → ... »
+	public static function js($file = null) {
+		$path = PATH['ASSET']['JS'];
+		if (!is_null($file)) {
+			$path .= $file . '.js';
+		}
+		return self::check($path);
+	}
+
+
+
+
+
+	// • ==== media → ... »
+	public static function media($file = null) {
+		$path = PATH['ASSET']['MEDIA'];
+		if (!is_null($file)) {
+			$path .= $file;
+		}
+		return self::check($path);
+	}
+
+
+
+
+
+	// • ==== favicon → ... »
+	public static function favicon($file = null) {
+		$path = PATH['ASSET']['MEDIA'] . 'favicon' . PS;
+		if (!is_null($file)) {
+			$path .= $file;
+		}
+		return self::check($path);
+	}
+
+
+
+
+
+	// • ==== icon → ... »
+	public static function icon($file = null) {
+		$path = PATH['ASSET']['MEDIA'] . 'icon' . PS;
+		if (!is_null($file)) {
+			$path .= $file;
+		}
+		return self::check($path);
+	}
+
+
+
+
+
+	// • ==== plugin → ... »
+	public static function plugin($file = null) {
+		$path = PATH['ASSET']['PLUGIN'];
+		if (!is_null($file)) {
+			$path .= $file;
+		}
+		return self::check($path);
+	}
+
+
 } //> end of PathX
