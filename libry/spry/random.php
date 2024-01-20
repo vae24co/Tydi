@@ -1,6 +1,6 @@
-<?php //*** oRandomX » Tydi™ Framework © 2024 ∞ AO™ • @iamodao • www.osawere.com ∞ Apache License ***//
+<?php //*** RandomX » Tydi™ Framework © 2024 ∞ AO™ • @iamodao • www.osawere.com ∞ Apache License ***//
 
-class oRandomX {
+class RandomX {
 
 	// • ==== call → handler - undefined method » error
 	public function __call($method, $argument) {
@@ -355,4 +355,4 @@ class oRandomX {
 		return self::alphanumeric($num);
 	}
 
-} //> end of oRandomX
+} //> end of RandomX
