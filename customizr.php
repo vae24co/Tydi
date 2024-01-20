@@ -75,7 +75,9 @@ $PATH = [
 		'ASSET' => PS . 'asset' . PS,
 		'CSS' => PS . 'css' . PS,
 		'JS' => PS . 'js' . PS,
-		'MEDIA' => PS . 'media' . PS
+		'MEDIA' => PS . 'media' . PS,
+		'ICON' => PS . 'icon' . PS,
+		'PLUGIN' => PS . 'plugin' . PS
 	],
 
 	'CLOUD' => [
