@@ -29,6 +29,45 @@ class EnvX {
 
 
 
+	// • ==== setProperty → ... »
+	public static function setProperty($property) {
+		if (is_array($property)) {
+			foreach ($property as $key => $value) {
+				self::${$key} = $value;
+			}
+		}
+		return;
+	}
+
+
+
+
+
+	// • ==== getProperty → ... »
+	public static function getProperty($property) {
+		if (isset(self::${$property})) {
+			return self::${$property};
+		}
+		return false;
+	}
+
+
+
+
+
+	// • ==== retrieve →... »
+	public static function retrieve(string $key) {
+		// if (strpos($key, "ENV_") === 0 && strlen($key) > 4) {
+		// 	$env = substr($key, 4);
+		// 	$key = env($env);
+		// }
+		return $key;
+	}
+
+
+
+
+
 	// • ==== load → ... »
 	public static function load($file) {
 		if (is_file($file)) {

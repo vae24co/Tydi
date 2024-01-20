@@ -165,8 +165,8 @@ class oRandomX {
 
 
 	// • ==== puid • Primary Unique ID »
-	public static function puid() {
-		return substr(self::uid(), 0, 20);
+	public static function puid($length = 20) {
+		return substr(self::uid(), 0, $length);
 	}
 
 
@@ -174,8 +174,8 @@ class oRandomX {
 
 
 	// • ==== suid • Secondary Unique ID »
-	public static function suid() {
-		return substr(self::uid(), 0, 40);
+	public static function suid($length = 40) {
+		return substr(self::uid(), 0, $length);
 	}
 
 
@@ -183,8 +183,8 @@ class oRandomX {
 
 
 	// • ==== tuid • Tertiary Unique ID »
-	public static function tuid() {
-		return substr(self::uid(), 0, 70);
+	public static function tuid($length = 70) {
+		return substr(self::uid(), 0, $length);
 	}
 
 
