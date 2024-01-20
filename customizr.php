@@ -113,6 +113,7 @@ PathX::init(['ORIG' => $ORIG]);
 // • Load Environment
 $env = PathX::env('app');
 EnvX::load($env);
+EnvX::init();
 
 
 // • Load Router
