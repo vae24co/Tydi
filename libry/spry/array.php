@@ -22,7 +22,7 @@ class ArrayX {
 
 
 
-	// ◇ ==== is • $var an Array? » Boolean
+	// • ==== is • $var an Array? » Boolean
 	public static function is($var) {
 		return is_array($var);
 	}
@@ -30,7 +30,8 @@ class ArrayX {
 
 
 
-	// ◇ ==== isEmpty • $var an Empty Array? » Boolean
+
+	// • ==== isEmpty • $var an Empty Array? » Boolean
 	public static function isEmpty($var) {
 		if (self::is($var) && empty($var)) {
 			return true;
@@ -41,7 +42,17 @@ class ArrayX {
 
 
 
-	// ◇ ==== isMulti • $var is multi-dimensional Array » Boolean
+
+	// • ==== isMultiWithOne → is multi-dimensional with one record »
+	public static function isMultiWithOne($array) {
+		return is_array($array) && count($array) === 1 && is_array(reset($array));
+	}
+
+
+
+
+
+	// • ==== isMulti • $var is multi-dimensional Array » Boolean
 	public static function isMulti($var) {
 		if (!self::isEmpty($var)) {
 			$i = array_filter($var, 'is_array');
@@ -55,7 +66,7 @@ class ArrayX {
 
 
 
-	// ◇ ==== isKey • Key in Array? » Boolean
+	// • ==== isKey • Key in Array? » Boolean
 	public static function isKey($array, $key) {
 		if (!self::isEmpty($array) && array_key_exists($key, $array)) {
 			return true;
@@ -66,7 +77,7 @@ class ArrayX {
 
 
 
-	// ◇ ==== isKeyNumeric • Check Numeric Keys » Boolean
+	// • ==== isKeyNumeric • Check Numeric Keys » Boolean
 	public static function isKeyNumeric($array) {
 		if (self::is($array)) {
 			foreach ($array as $key => $value) {
