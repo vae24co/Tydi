@@ -63,9 +63,9 @@ class EnvX {
 	public static function version($flag = null) {
 
 		// » get version
-		if(!empty(self::$constants['VERSION'])){
+		if (!empty(self::$constants['VERSION'])) {
 			$version = self::$constants['VERSION'];
-			if($flag === 'NAME'){
+			if ($flag === 'NAME') {
 				$version = StringX::beforeAs($version, '-');
 			}
 			return $version;
@@ -97,16 +97,31 @@ class EnvX {
 
 
 	// • ==== database → ... »
-	public static function database(){
+	public static function database() {
 		$config = [];
-		foreach(self::$constants as $key => $value){
-			if(StringX::beginWith($key, 'DATABASE')){
+		foreach (self::$constants as $key => $value) {
+			if (StringX::beginWith($key, 'DATABASE')) {
 				$key = strtolower(StringX::cropBegin($key, 'DATABASE_'));
 				$config[$key] = $value;
 			}
 		}
 		return ArrayX::toObj($config);
 	}
+
+
+
+
+
+	// • ==== init → ... »
+	public static function init() {
+
+		// » use database
+		$dba = self::database();
+		if (!empty($dba) && is_object($dba)) {
+			DatabaseX::connect($dba->name, $dba->username, $dba->password);
+		}
+	}
+
 
 
 
