@@ -1,17 +1,21 @@
-<?php //*** Session » Tydi™ Framework © 2023 ∞ AO™ • @iamodao • www.osawere.com ∞ Apache License ***//
+<?php //*** Session » Tydi™ Framework © 2024 ∞ AO™ • @iamodao • www.osawere.com ∞ Apache License ***//
+
 class Session {
 
-	// • ==== call → handler - undefined method » [error]
+	// • ==== call → handler - undefined method » error
 	public function __call($method, $argument) {
-		return Tydi::oversightX(__CLASS__, 'method unreachable', $method);
+		$caller = __CLASS__ . '→' . $method . '()';
+		return DebugX::oversight(__CLASS__, 'Method Unreachable', $caller);
 	}
 
 
 
 
-	// • ==== callStatic → handler - undefined static method » [error]
+
+	// • ==== callStatic → handler - undefined static method » error
 	public static function __callStatic($method, $argument) {
-		return Tydi::oversightX(__CLASS__, 'static: method unreachable', $method);
+		$caller = __CLASS__ . '::' . $method . '()';
+		return DebugX::oversight(__CLASS__, 'Static: Method Unreachable', $caller);
 	}
 
 
