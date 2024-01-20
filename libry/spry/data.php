@@ -1,6 +1,6 @@
-<?php //*** oDataX » Tydi™ Framework © 2024 ∞ AO™ • @iamodao • www.osawere.com ∞ Apache License ***//
+<?php //*** DataX » Tydi™ Framework © 2024 ∞ AO™ • @iamodao • www.osawere.com ∞ Apache License ***//
 
-class oDataX {
+class DataX {
 
 	// • ==== call → handler - undefined method » error
 	public function __call($method, $argument) {
@@ -35,4 +35,4 @@ class oDataX {
 	}
 
 
-} //> end of oDataX
+} //> end of DataX
