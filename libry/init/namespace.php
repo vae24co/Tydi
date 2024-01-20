@@ -14,6 +14,12 @@ $namespace = [
 	'RedirectX' => LIBRY['SPRY'] . 'redirect.php',
 	'FrontendX' => LIBRY['SPRY'] . 'frontend.php',
 	'DatabaseX' => LIBRY['SPRY'] . 'database.php',
+	'DataX' => LIBRY['SPRY'] . 'data.php',
+	'RandomX' => LIBRY['SPRY'] . 'random.php',
+
+	'UserX' => LIBRY['OBJ'] . 'user.php',
+	'AuthX' => LIBRY['OBJ'] . 'auth.php',
+
 ];
 
 return $namespace;
