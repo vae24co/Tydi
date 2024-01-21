@@ -122,6 +122,7 @@ class PathX {
 	public static function view($view = null, $safely = false) {
 		$path = self::$ORIG . PATH['FRONTEND']['VIEW'];
 		if (!empty($view)) {
+			$view = StringX::swap($view, '/', DS);
 			$file = $path . strtolower($view) . '.php';
 			if (!is_file($file) && $safely === false) {
 				$error = '<strong>' . FRAMEWORK . '™</strong> • View Unavailable! → [<em>' . $file . '</em>]';
