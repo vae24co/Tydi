@@ -58,6 +58,9 @@ class FrontendX {
 	private static function loader($file, $content = []) {
 		$record = self::$record;
 		$content = self::content($content);
+		if (!is_file($file)) {
+			return self::fallback();
+		}
 		return require $file;
 	}
 
@@ -76,8 +79,11 @@ class FrontendX {
 
 
 	// • ==== view → ... »
-	public static function view($view, $content = []) {
-		$view = PathX::view($view);
+	public static function view($view = null, $content = []) {
+		if (is_null($view)) {
+			$view = RouteX::isGet();
+		}
+		$view = PathX::view($view, true);
 		return self::loader($view, $content);
 	}
 
@@ -89,6 +95,16 @@ class FrontendX {
 	public static function slice($slice, $content = []) {
 		$slice = PathX::slice($slice);
 		return self::loader($slice, $content);
+	}
+
+
+
+
+
+	// • ==== fallback → ... »
+	public static function fallback() {
+		echo '<p><strong>Not Found</strong><br>Sorry, the requested content is unavailable at the moment.<br><br>Please <u><a href="' . RouteX::to('index') . '">return here!</a></u></p>';
+		return;
 	}
 
 } //> end of FrontendX
