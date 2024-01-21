@@ -100,6 +100,24 @@ class PathX {
 
 
 
+	// • ==== bit → ... »
+	public static function bit($bit = null) {
+		$path = self::$ORIG . PATH['FRONTEND']['LAYOUT'] . 'bit' . DS;
+		if (!empty($bit)) {
+			$file = $path . strtolower($bit) . '.php';
+			if (!is_file($file)) {
+				$error = '<strong>' . FRAMEWORK . '™</strong> • Bit Unavailable! → [<em>' . $file . '</em>]';
+				DebugX::exit($error);
+			}
+			return $file;
+		}
+		return $path;
+	}
+
+
+
+
+
 	// • ==== view → ... »
 	public static function view($view = null, $safely = false) {
 		$path = self::$ORIG . PATH['FRONTEND']['VIEW'];
