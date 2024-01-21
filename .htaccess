@@ -14,11 +14,11 @@
 	RewriteCond %{REQUEST_URI} (.+)/$
 	RewriteRule ^ %1 [L,R=302]
 
-RewriteRule ^css\/(.+)$ /orig/source/css/$1 [NC,QSA,END]
-RewriteRule ^js\/(.+)$ /orig/source/js/$1 [NC,QSA,END]
-RewriteRule ^media\/(.+)$ /orig/source/media/$1 [NC,QSA,END]
-RewriteRule ^favicon\/(.+)$ /orig/source/media/favicon/$1 [NC,QSA,END]
-RewriteRule ^plugin\/(.+)$ /orig/source/plugin/$1 [NC,QSA,END]
+	RewriteRule ^css\/(.+)$ /orig/source/css/$1 [NC,QSA,END]
+	RewriteRule ^js\/(.+)$ /orig/source/js/$1 [NC,QSA,END]
+	RewriteRule ^media\/(.+)$ /orig/source/media/$1 [NC,QSA,END]
+	RewriteRule ^favicon\/(.+)$ /orig/source/media/favicon/$1 [NC,QSA,END]
+	RewriteRule ^plugin\/(.+)$ /orig/source/plugin/$1 [NC,QSA,END]
 
 	# Send Requests To Index [Non-Exisiting Files & Directory]
 	RewriteCond %{REQUEST_FILENAME} !-d
