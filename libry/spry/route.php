@@ -58,6 +58,9 @@ class RouteX {
 			if (!StringX::beginWith($uri, '/')) {
 				$uri = '/' . $uri;
 			}
+			if (strlen($uri) > 1 && StringX::endWith($uri, '/')) {
+				$uri = StringX::cropEnd($uri, '/');
+			}
 		} else {
 			if ($uri === '/') {
 				$uri = 'index';
