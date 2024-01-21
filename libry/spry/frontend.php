@@ -101,9 +101,29 @@ class FrontendX {
 
 
 
+	// • ==== piece → ... »
+	public static function piece($slice, $content = []) {
+		$slice = PathX::slice('piece' . DS . $slice);
+		return self::loader($slice, $content);
+	}
+
+
+
+
+
 	// • ==== bit → ... »
 	public static function bit($bit, $content = []) {
 		$bit = PathX::bit($bit);
+		return self::loader($bit, $content);
+	}
+
+
+
+
+
+	// • ==== bitNav → ... »
+	public static function bitNav($bit, $content = []) {
+		$bit = PathX::bit('nav'.DS.$bit);
 		return self::loader($bit, $content);
 	}
 
