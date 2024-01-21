@@ -101,6 +101,16 @@ class FrontendX {
 
 
 
+	// • ==== bit → ... »
+	public static function bit($bit, $content = []) {
+		$bit = PathX::bit($bit);
+		return self::loader($bit, $content);
+	}
+
+
+
+
+
 	// • ==== fallback → ... »
 	public static function fallback() {
 		echo '<p><strong>Not Found</strong><br>Sorry, the requested content is unavailable at the moment.<br><br>Please <u><a href="' . RouteX::to('index') . '">return here!</a></u></p>';
