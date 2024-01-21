@@ -307,4 +307,18 @@ class RouteX {
 		return self::is($route, 'ANY');
 	}
 
+
+
+
+
+	// • ==== to → ... »
+	public static function to($route){
+		if(StringX::beginWithAny($route, ['https://', 'http://'])){
+			return $route;
+		}
+		//TODO: improve code
+		$uri = self::clean($route);
+		return $uri;
+	}
+
 } //> end of RouteX
