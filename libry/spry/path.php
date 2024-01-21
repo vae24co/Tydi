@@ -101,11 +101,11 @@ class PathX {
 
 
 	// • ==== view → ... »
-	public static function view($view = null) {
+	public static function view($view = null, $safely = false) {
 		$path = self::$ORIG . PATH['FRONTEND']['VIEW'];
 		if (!empty($view)) {
 			$file = $path . strtolower($view) . '.php';
-			if (!is_file($file)) {
+			if (!is_file($file) && $safely === false) {
 				$error = '<strong>' . FRAMEWORK . '™</strong> • View Unavailable! → [<em>' . $file . '</em>]';
 				DebugX::exit($error);
 			}
