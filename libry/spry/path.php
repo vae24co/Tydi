@@ -67,32 +67,18 @@ class PathX {
 
 
 
-	// • ==== routzr → ... »
-	public static function routzr($routzr = 'SITE') {
-		$routzr = strtolower($routzr) . '.php';
-		$file = self::$ORIG . PATH['BACKEND']['ROUT'] . $routzr;
-		if (!is_file($file)) {
-			$error = '<strong>' . FRAMEWORK . '™</strong> • Routzr Unavailable! → [<em>' . $file . '</em>]';
-			exit($error);
-		}
-		return $file;
+	// • ==== debug → ... »
+	private static function debug() {
+		return RD . 'debug.php';
 	}
 
 
 
 
 
-	// • ==== layout → ... »
-	public static function layout($layout = null) {
-		$path = self::$ORIG . PATH['FRONTEND']['LAYOUT'];
-		if (!empty($layout)) {
-			$file = $path . strtolower($layout) . '.php';
-			if (!is_file($file)) {
-				$error = '<strong>' . FRAMEWORK . '™</strong> • Layout Unavailable! → [<em>' . $file . '</em>]';
-				DebugX::exit($error);
-			}
-			return $file;
-		}
+	// • ==== is → check if path or file exist »
+	public static function is($path, $tag = null) {
+		// TODO: implement code
 		return $path;
 	}
 
@@ -100,33 +86,107 @@ class PathX {
 
 
 
-	// • ==== bit → ... »
-	public static function bit($bit = null) {
-		$path = self::$ORIG . PATH['FRONTEND']['LAYOUT'] . 'bit' . DS;
-		if (!empty($bit)) {
-			$file = $path . strtolower($bit) . '.php';
-			if (!is_file($file)) {
-				$error = '<strong>' . FRAMEWORK . '™</strong> • Bit Unavailable! → [<em>' . $file . '</em>]';
-				DebugX::exit($error);
-			}
-			return $file;
+	// • ==== css → ... »
+	public static function css($file = null) {
+		$path = PATH['ASSET']['CSS'];
+		if (!is_null($file)) {
+			$path .= $file . '.css';
 		}
-		return $path;
+		return self::is($path, 'CSS');
 	}
 
 
 
 
 
-	// • ==== view → ... »
-	public static function view($view = null, $safely = false) {
-		$path = self::$ORIG . PATH['FRONTEND']['VIEW'];
-		if (!empty($view)) {
-			$view = StringX::swap($view, '/', DS);
-			$file = $path . strtolower($view) . '.php';
-			if (!is_file($file) && $safely === false) {
-				$error = '<strong>' . FRAMEWORK . '™</strong> • View Unavailable! → [<em>' . $file . '</em>]';
-				DebugX::exit($error);
+	// • ==== js → ... »
+	public static function js($file = null) {
+		$path = PATH['ASSET']['JS'];
+		if (!is_null($file)) {
+			$path .= $file . '.js';
+		}
+		return self::is($path, 'JS');
+	}
+
+
+
+
+
+	// • ==== media → ... »
+	public static function media($file = null, $tag = 'MEDIA') {
+		$path = PATH['ASSET']['MEDIA'];
+		if (!is_null($file)) {
+			$path .= $file;
+		}
+		return self::is($path, $tag);
+	}
+
+
+
+
+
+	// • ==== favicon → ... »
+	public static function favicon($file = null) {
+		$path = 'favicon' . PS;
+		if (!is_null($file)) {
+			$path .= $file;
+		}
+		return self::media($path, 'FAVICON');
+	}
+
+
+
+
+
+	// • ==== icon → ... »
+	public static function icon($file = null) {
+		$path = 'icon' . PS;
+		if (!is_null($file)) {
+			$path .= $file;
+		}
+		return self::media($path, 'ICON');
+	}
+
+
+
+
+
+	// • ==== plugin → ... »
+	public static function plugin($file = null) {
+		$path = PATH['ASSET']['PLUGIN'];
+		if (!is_null($file)) {
+			$path .= $file;
+		}
+		return self::is($path, 'PLUGIN');
+	}
+
+
+
+
+
+	// • ==== fontawesome → ... »
+	public static function fontawesome($file = null) {
+		$path = 'fontawesome' . PS;
+		if (!is_null($file)) {
+			$path .= $file;
+		}
+		return self::plugin($path);
+	}
+
+
+
+
+
+	// • ==== prepare → ... »
+	public static function prepare($path, $file = null, $tag = 'resource', $flagError = false) {
+		if (!empty($file)) {
+			$file = $path . strtolower(StringX::swap($file, '/', DS));
+			if (!StringX::endWith($file, '.php')) {
+				$file .= '.php';
+			}
+			if ($flagError === true && !is_file($file)) {
+				$e = '<strong>' . FRAMEWORK . '™</strong> • ' . ucwords($tag) . ' Unavailable! → [<em>' . $file . '</em>]';
+				return DebugX::exit($e);
 			}
 			return $file;
 		}
@@ -138,17 +198,58 @@ class PathX {
 
 
 	// • ==== slice → ... »
-	public static function slice($slice = null) {
+	public static function slice($file = null, $tag = 'slice', $flagError = false) {
 		$path = self::$ORIG . PATH['FRONTEND']['SLICE'];
-		if (!empty($slice)) {
-			$file = $path . strtolower($slice) . '.php';
-			if (!is_file($file)) {
-				$error = '<strong>' . FRAMEWORK . '™</strong> • Slice Unavailable! → [<em>' . $file . '</em>]';
-				DebugX::exit($error);
-			}
-			return $file;
-		}
-		return $path;
+		return self::prepare($path, $file, $tag, $flagError);
+	}
+
+
+
+
+
+	// • ==== breadcrumb → ... »
+	public static function breadcrumb($file = null, $flagError = false) {
+		$path = self::$ORIG . PATH['FRONTEND']['SLICE'] . 'breadcrumb' . DS;
+		return self::prepare($path, $file, 'breadcrumb', $flagError);
+	}
+
+
+
+
+
+	// • ==== layout → ... »
+	public static function layout($file = null, $flagError = false) {
+		$path = self::$ORIG . PATH['FRONTEND']['LAYOUT'];
+		return self::prepare($path, $file, 'layout', $flagError);
+	}
+
+
+
+
+
+	// • ==== bit → ... »
+	public static function bit($file = null, $flagError = false) {
+		$path = self::$ORIG . PATH['FRONTEND']['LAYOUT'] . 'bit' . DS;
+		return self::prepare($path, $file, 'bit', $flagError);
+	}
+
+
+
+
+
+	// • ==== view → ... »
+	public static function view($file = null, $flagError = false) {
+		$path = self::$ORIG . PATH['FRONTEND']['VIEW'];
+		return self::prepare($path, $file, 'view', $flagError);
+	}
+
+
+
+
+	// • ==== routzr → ... »
+	public static function routzr($routzr = 'SITE') {
+		$path = self::$ORIG . PATH['BACKEND']['ROUT'];
+		return self::prepare($path, $routzr, 'Routzr', true);
 	}
 
 
@@ -170,22 +271,13 @@ class PathX {
 
 
 
-	// • ==== debug → ... »
-	public static function debug() {
-		return RD . 'debug.php';
-	}
-
-
-
-
-
 	// • ==== load → ... »
 	public static function load($source) {
 		if ($source === 'DEBUG') {
 			$file = self::debug();
-			if (file_exists($file)) {
-				require $file;
-			}
+		}
+		if (!empty($file) && file_exists($file)) {
+			return require $file;
 		}
 		return;
 	}
@@ -193,90 +285,6 @@ class PathX {
 
 
 
-
-	// • ==== check → check if path or file exist »
-	public static function check($path) {
-		// TODO: implement code
-		return $path;
-	}
-
-
-
-
-
-	// • ==== css → ... »
-	public static function css($file = null) {
-		$path = PATH['ASSET']['CSS'];
-		if (!is_null($file)) {
-			$path .= $file . '.css';
-		}
-		return self::check($path);
-	}
-
-
-
-
-
-	// • ==== js → ... »
-	public static function js($file = null) {
-		$path = PATH['ASSET']['JS'];
-		if (!is_null($file)) {
-			$path .= $file . '.js';
-		}
-		return self::check($path);
-	}
-
-
-
-
-
-	// • ==== media → ... »
-	public static function media($file = null) {
-		$path = PATH['ASSET']['MEDIA'];
-		if (!is_null($file)) {
-			$path .= $file;
-		}
-		return self::check($path);
-	}
-
-
-
-
-
-	// • ==== favicon → ... »
-	public static function favicon($file = null) {
-		$path = PATH['ASSET']['MEDIA'] . 'favicon' . PS;
-		if (!is_null($file)) {
-			$path .= $file;
-		}
-		return self::check($path);
-	}
-
-
-
-
-
-	// • ==== icon → ... »
-	public static function icon($file = null) {
-		$path = PATH['ASSET']['MEDIA'] . 'icon' . PS;
-		if (!is_null($file)) {
-			$path .= $file;
-		}
-		return self::check($path);
-	}
-
-
-
-
-
-	// • ==== plugin → ... »
-	public static function plugin($file = null) {
-		$path = PATH['ASSET']['PLUGIN'];
-		if (!is_null($file)) {
-			$path .= $file;
-		}
-		return self::check($path);
-	}
 
 
 } //> end of PathX
