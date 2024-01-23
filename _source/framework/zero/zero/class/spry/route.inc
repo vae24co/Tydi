@@ -5,7 +5,7 @@
 * ============================================================================================
 * RouteX ~ Route Utility • VERSION » alpha-0.0.1 ***/
 
-class RouteX {
+class iRouteX {
 	private static $prefix;
 	private static $uri;
 	private static $link;
