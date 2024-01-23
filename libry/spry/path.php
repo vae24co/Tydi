@@ -54,6 +54,10 @@ class PathX {
 			case 'ORGANIZR':
 				$path = PATH['BACKEND']['ORGAN'];
 				break;
+
+			case 'UTILIZR':
+				$path = PATH['BACKEND']['UTIL'];
+				break;
 		}
 
 		if (!empty($path) && !is_null($source)) {
@@ -211,6 +215,15 @@ class PathX {
 	public static function breadcrumb($file = null, $flagError = false) {
 		$path = self::$ORIG . PATH['FRONTEND']['SLICE'] . 'breadcrumb' . DS;
 		return self::prepare($path, $file, 'breadcrumb', $flagError);
+	}
+
+
+
+
+	// • ==== form → ... »
+	public static function form($file = null, $flagError = false) {
+		$path = self::$ORIG . PATH['FRONTEND']['SLICE'] . 'form' . DS;
+		return self::prepare($path, $file, 'form', $flagError);
 	}
 
 
