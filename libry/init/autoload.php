@@ -26,6 +26,14 @@ function AutoloadX($class) {
 	}
 
 
+	// • Utilizr :: Class name ends with Utilizr
+	if (substr($class, -7) === 'Utilizr' && strlen($class) > 7) {
+		$file = substr_replace($file, '', -7) . '.php';
+		$path = PathX::to('UTILIZR');
+		DebugX::classX($file, $class, $path);
+	}
+
+
 	// • class not exists :: trigger errors
 	if (!class_exists($class, false)) {
 		if (!empty($classFile)) {
