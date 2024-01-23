@@ -206,7 +206,7 @@ class RouteX {
 
 
 	// • ==== ismethod → ... »
-	protected static function ismethod($method) {
+	public static function ismethod($method) {
 		if ($method === 'ANY' && (self::$is->method === 'GET' || self::$is->method === 'POST')) {
 			return true;
 		} elseif ($method === self::$is->method) {
