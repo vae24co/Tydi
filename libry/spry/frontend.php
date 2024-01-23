@@ -54,8 +54,13 @@ class FrontendX {
 
 
 	// • ==== fallback → ... »
-	private static function fallback($file = null, $tag = null) {
+	private static function fallback($file = null, $tag = null, $content = []) {
 		if (in_array($tag, ['view'])) {
+			$fallback = PathX::view('fallback');
+			if (is_file($fallback)) {
+				$content['file'] = $file;
+				return self::loader($fallback, $content, 'fallback');
+			}
 			echo '<p><strong>Not Found</strong><br>Sorry, the requested content is unavailable at the moment.<br><br>Please <u><a href="' . RouteX::to('index') . '">return here!</a></u></p>';
 		}
 		if (!empty($file)) {
@@ -73,7 +78,7 @@ class FrontendX {
 		$record = self::$record;
 		$content = self::content($content);
 		if (!is_file($file)) {
-			return self::fallback($file, $tag);
+			return self::fallback($file, $tag, $content);
 		}
 		return require $file;
 	}
