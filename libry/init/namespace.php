@@ -16,6 +16,8 @@ $namespace = [
 	'DatabaseX' => LIBRY['SPRY'] . 'database.php',
 	'DataX' => LIBRY['SPRY'] . 'data.php',
 	'RandomX' => LIBRY['SPRY'] . 'random.php',
+	'UtilizrX' => LIBRY['SPRY'] . 'utilizr.php',
+
 
 	'UserX' => LIBRY['OBJ'] . 'user.php',
 	'AuthX' => LIBRY['OBJ'] . 'auth.php',
