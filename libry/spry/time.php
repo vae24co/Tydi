@@ -1,6 +1,6 @@
-<?php //*** oTimeX » Tydi™ Framework © 2024 ∞ AO™ • @iamodao • www.osawere.com ∞ Apache License ***//
+<?php //*** TimeX » Tydi™ Framework © 2024 ∞ AO™ • @iamodao • www.osawere.com ∞ Apache License ***//
 
-class oTimeX {
+class TimeX {
 
 	// • ==== call → handler - undefined method » error
 	public function __call($method, $argument) {
@@ -28,4 +28,18 @@ class oTimeX {
 		return $time;
 	}
 
-} //> end of oTimeX
+
+
+
+
+	// • ==== sqlDate → mysql date type » string
+	public static function sqlDate($time = null) {
+		$format = 'Y-m-d';
+		if (is_null($time)) {
+			return date($format);
+		}
+
+	}
+
+
+} //> end of TimeX

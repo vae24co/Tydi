@@ -151,8 +151,6 @@ class RouteX {
 			return DebugX::oversight(__CLASS__, 'Route Duplicate', '~post: "' . $uri . '"');
 		}
 		self::make('POST', $uri, $handler);
-		// DebugX::exit(self::$routes);
-
 		return self::enact($uri, 'POST');
 	}
 
@@ -328,6 +326,17 @@ class RouteX {
 		$uri = self::clean($route);
 		return $uri;
 	}
+
+
+
+
+
+	// • ==== redirect → ... »
+	public static function redirect($route){
+		$uri = self::to($route);
+		return RedirectX::now($uri);
+	}
+
 
 
 

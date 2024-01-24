@@ -51,6 +51,10 @@ class PathX {
 
 		switch ($source) {
 
+			case 'MODELIZR':
+				$path = PATH['BACKEND']['MODEL'];
+				break;
+
 			case 'ORGANIZR':
 				$path = PATH['BACKEND']['ORGAN'];
 				break;

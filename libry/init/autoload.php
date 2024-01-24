@@ -18,6 +18,14 @@ function AutoloadX($class) {
 	$path = '';
 
 
+	// • Modelizr :: Class name ends with Modelizr
+	if (substr($class, -8) === 'Modelizr' && strlen($class) > 8) {
+		$file = substr_replace($file, '', -8) . '.php';
+		$path = PathX::to('MODELIZR');
+		DebugX::classX($file, $class, $path);
+	}
+
+
 	// • Organizr :: Class name ends with Organizr
 	if (substr($class, -8) === 'Organizr' && strlen($class) > 8) {
 		$file = substr_replace($file, '', -8) . '.php';

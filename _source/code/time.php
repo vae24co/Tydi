@@ -55,11 +55,9 @@ class Time {
 		if ($format === 'GMT') {
 			$format = 'P';
 		}
-
+ow a
 		// * SQL Dates
-		elseif ($format === 'SQL_DATE') {
-			$format = 'Y-m-d';
-		} elseif ($format === 'SQL_TIME') {
+	 elseif ($format === 'SQL_TIME') {
 			$format = 'H:i:s';
 		} elseif ($format === 'SQL_DATETIME') {
 			$format = 'Y-m-d H:i:s';

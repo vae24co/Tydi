@@ -355,4 +355,13 @@ class RandomX {
 		return self::alphanumeric($num);
 	}
 
+
+
+
+
+	// • ==== serial → .. » string
+	public static function serial() {
+		return date('Ym') . self::alphanumeric(4, 'UPPERCASE');
+	}
+
 } //> end of RandomX

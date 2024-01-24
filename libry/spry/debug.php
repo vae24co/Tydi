@@ -151,8 +151,8 @@ class DebugX {
 
 
 
-	// • ==== go → ... »
-	public static function go($var, string $title = null) {
+	// • ==== dump → ... »
+	public static function dump($var, string $title = null) {
 		$o = '<div style="' . self::style('container') . '">';
 
 		if (!empty($title)) {
@@ -196,7 +196,7 @@ class DebugX {
 		if (empty($title)) {
 			$title = FRAMEWORK . '™';
 		}
-		self::go($var, $title);
+		self::dump($var, $title);
 		exit;
 	}
 
