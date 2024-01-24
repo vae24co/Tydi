@@ -222,7 +222,7 @@ class PathX {
 
 	// • ==== form → ... »
 	public static function form($file = null, $flagError = false) {
-		$path = self::$ORIG . PATH['FRONTEND']['SLICE'] . 'form' . DS;
+		$path = self::$ORIG . PATH['FRONTEND']['FORM'];
 		return self::prepare($path, $file, 'form', $flagError);
 	}
 
