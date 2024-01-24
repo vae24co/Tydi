@@ -78,7 +78,7 @@ class RouteX {
 	// • ==== make → ... »
 	private static function make($method, $uri, $handler) {
 		$uri = self::clean($uri, true);
-		self::$routes['GET'][$uri] = $handler;
+		self::$routes[strtoupper($method)][$uri] = $handler;
 		return;
 	}
 
@@ -151,6 +151,8 @@ class RouteX {
 			return DebugX::oversight(__CLASS__, 'Route Duplicate', '~post: "' . $uri . '"');
 		}
 		self::make('POST', $uri, $handler);
+		// DebugX::exit(self::$routes);
+
 		return self::enact($uri, 'POST');
 	}
 
@@ -263,6 +265,9 @@ class RouteX {
 				if ($returnBool) {
 					return true;
 				}
+				if ($method === 'ANY') {
+					$method = 'GET';
+				}
 				return ['handler' => self::$routes[$method][$uri], 'params' => []];
 			}
 		}
@@ -315,13 +320,30 @@ class RouteX {
 
 
 	// • ==== to → ... »
-	public static function to($route){
-		if(StringX::beginWithAny($route, ['https://', 'http://'])){
+	public static function to($route) {
+		if (StringX::beginWithAny($route, ['https://', 'http://'])) {
 			return $route;
 		}
 		//TODO: improve code
 		$uri = self::clean($route);
 		return $uri;
 	}
+
+
+
+
+
+	// • ==== e404 → ... »
+	public static function e404($view = '404') {
+		self::init();
+		$valid = self::inroute(self::$is->route, self::$is->method);
+		if (!$valid) {
+			if (!is_null($view)) {
+				return FrontendX::view($view);
+			}
+			// TODO: improve code
+		}
+	}
+
 
 } //> end of RouteX
