@@ -125,7 +125,20 @@ class FrontendX {
 	// • ==== slice → ... »
 	public static function slice($slice, $content = []) {
 		$slice = PathX::slice($slice);
-		return self::loader($slice, $content);
+		return self::loader($slice, $content, 'slice');
+	}
+
+
+
+
+
+	// • ==== form → ... »
+	public static function form($form = null, $content = []) {
+		if (is_null($form)) {
+			$form = UtilizrX::module() . DS . UtilizrX::action();
+		}
+		$form = PathX::form($form);
+		return self::loader($form, $content, 'form');
 	}
 
 
