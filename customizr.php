@@ -46,6 +46,7 @@ if (is_file($file)) {
 // • Custom Directory & Path
 $BACKEND = 'backend' . DS;
 $FRONTEND = 'frontend' . DS;
+$PAGE = $FRONTEND . 'pagezr' . DS;
 $STORAGE = 'source' . DS . 'upload' . DS;
 $CLOUD = PS . 'cloud' . PS;
 
@@ -60,8 +61,10 @@ $PATH = [
 
 	'FRONTEND' => [
 		'LAYOUT' => $FRONTEND . 'layout' . DS,
-		'SLICE' => $FRONTEND . 'slicezr' . DS,
-		'VIEW' => $FRONTEND . 'viewzr' . DS
+		'PAGE' => $PAGE,
+		'VIEW' => $PAGE . 'viewzr' . DS,
+		'FORM' => $PAGE . 'formzr' . DS,
+		'SLICE' => $FRONTEND . 'slicezr' . DS
 	],
 
 	'STORAGE' => [
